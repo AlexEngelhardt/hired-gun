@@ -6,6 +6,10 @@ A webapp for freelancers to track clients, projects, work sessions, and invoices
 
 Best order for creating a new app:
 
+- Determine apps and models
+  - Try to predict the final models and relations as best as possible
+  - Find out how to best split it in apps for now
+  - Start with only one app here, though
 - Create Models
   - Determine your models, fields, and relationships
   - Create the `models.py`
