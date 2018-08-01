@@ -12,6 +12,39 @@
 
 <ul>
   {% for project in client.project_set.all %}
-    <li><a href="{% url 'projects:project-detail' project.id %}">{{ project.name }}</a></li>
+  <li><a href="{% url 'projects:project-detail' project.id %}">{{ project.name }}</a></li>
   {% endfor %}
 </ul>
+
+<h3>Add a new project</h3>
+
+<form action="{% url 'projects:add-project' client.id %}" method="post">
+  {% csrf_token %}
+
+  <p>
+    <label for="name">Project name: </label>
+    <input type="text" name="name" id="name" />
+  </p>
+  <p>
+    <label for="rate">Rate: </label>
+    <input type="number" name="rate" id="rate" />
+
+    <label for="perhour">per hour</label>
+    <input type="radio" name="rate_unit" id="perhour" value="hr" checked="checked" />
+    <label for="perday">per day</label>
+    <input type="radio" name="rate_unit" id="perday" value="day" />
+  </p>
+  <p>
+    <label for="start_date">Start date: </label>
+    <input type="date" name="start_date" id="start_date">
+  </p>
+  <p>
+    <label for="end_date">End date: </label>
+    <input type="date" name="end_date" id="end_date">
+    (leave empty if still running)
+  </p>
+  <p>
+    {# <input type="hidden" name="client" id="client" value="{{ client.id }}" /> #}
+    <input type="submit" value="Add" />
+  </p>
+</form>

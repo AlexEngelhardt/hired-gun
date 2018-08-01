@@ -5,6 +5,10 @@
   {% for project in projects %}
   <li>
     <a href="{% url 'projects:project-detail' project.id %}">{{ project.name }}</a> <br />
+    <form action="{% url 'projects:remove-project' project.id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="delete project" />
+    </form>
     Start {{ project.start_date }} <br />
     End {{ project.end_date }} <br />
     Rate: {{ project.rate }} € per {{ project.rate_unit }}
