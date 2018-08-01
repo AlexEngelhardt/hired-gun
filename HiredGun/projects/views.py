@@ -35,7 +35,22 @@ def remove_project(request, client_id):
     project.delete()
     
     return HttpResponseRedirect(reverse('projects:client-detail', args=(the_projects_client.id,)))
+
+def update_project(request, project_id):
+    if request.POST.get('end_date') == '':
+        end_date = None
+    else:
+        end_date = request.POST.get('end_date')
     
+    Project.objects.filter(pk=project_id).update(
+        name=request.POST.get('name'),
+        rate=request.POST.get('rate'),
+        rate_unit=request.POST.get('rate_unit'),
+        start_date=request.POST.get('start_date'),
+        end_date=end_date
+    )
+
+    return HttpResponseRedirect(reverse('projects:project-detail', args=(project_id,)))
     
 def add_project(request, client_id):
     try:

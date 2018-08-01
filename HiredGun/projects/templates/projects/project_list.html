@@ -9,9 +9,11 @@
       {% csrf_token %}
       <input type="submit" value="delete project" />
     </form>
-    Start {{ project.start_date }} <br />
-    End {{ project.end_date }} <br />
-    Rate: {{ project.rate }} € per {{ project.rate_unit }}
+    <ul>
+    <li>Start {{ project.start_date }}</li>
+    <li>End {{ project.end_date }}</li>
+    <li>Rate: {{ project.rate }} € per {{ project.rate_unit }}</li>
+    </ul>
   </li>
   {% endfor %}
 </ul>
