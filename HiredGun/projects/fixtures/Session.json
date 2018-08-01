@@ -1,0 +1,38 @@
+[
+{
+    "model": "projects.session",
+    "pk": 1,
+    "fields": {
+        "project": 7,
+        "date": "2018-08-01",
+        "start_time": "06:00:00",
+        "end_time": "10:00:00",
+        "break_duration": "00:30:00",
+        "description": "Four hours, and a 30 minute break, for a total of 3:30hrs worked"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 2,
+    "fields": {
+        "project": 6,
+        "date": "2018-07-31",
+        "start_time": "08:00:00",
+        "end_time": "17:00:00",
+        "break_duration": "00:30:00",
+        "description": "9hrs and 30min break, i.e. 8:30hrs worked"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 3,
+    "fields": {
+        "project": 6,
+        "date": "2018-07-23",
+        "start_time": "09:00:00",
+        "end_time": "18:00:00",
+        "break_duration": "01:00:00",
+        "description": "9hrs minus 1hr break, for a total of 8hrs worked"
+    }
+}
+]

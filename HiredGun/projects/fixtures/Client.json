@@ -1,0 +1,22 @@
+[
+{
+    "model": "projects.client",
+    "pk": 1,
+    "fields": {
+        "name": "Mr. Good Client",
+        "billing_address": "His Street 3, 12345 Munich, Germany",
+        "invoice_email": "goody@example.com",
+        "payment_terms": "Net 30"
+    }
+},
+{
+    "model": "projects.client",
+    "pk": 2,
+    "fields": {
+        "name": "Sir Bad Client",
+        "billing_address": "Bad Street 33, 54321 Munich, Germany",
+        "invoice_email": "baddy@example.com",
+        "payment_terms": "21 MFI"
+    }
+}
+]

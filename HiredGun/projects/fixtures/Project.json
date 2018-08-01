@@ -1,0 +1,86 @@
+[
+{
+    "model": "projects.project",
+    "pk": 1,
+    "fields": {
+        "name": "A good project",
+        "client": 1,
+        "rate": "1000.00",
+        "rate_unit": "hr",
+        "start_date": "2018-08-01",
+        "end_date": null
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 2,
+    "fields": {
+        "name": "A second good project",
+        "client": 1,
+        "rate": "2000.00",
+        "rate_unit": "day",
+        "start_date": "2018-07-09",
+        "end_date": null
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 3,
+    "fields": {
+        "name": "A finished project",
+        "client": 1,
+        "rate": "3000.00",
+        "rate_unit": "hr",
+        "start_date": "2018-06-01",
+        "end_date": "2018-06-30"
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 4,
+    "fields": {
+        "name": "A bad project with future end date",
+        "client": 2,
+        "rate": "1.00",
+        "rate_unit": "hr",
+        "start_date": "2018-07-01",
+        "end_date": "2022-08-01"
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 5,
+    "fields": {
+        "name": "A finished bad project",
+        "client": 2,
+        "rate": "2.00",
+        "rate_unit": "hr",
+        "start_date": "2018-07-01",
+        "end_date": "2018-07-31"
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 6,
+    "fields": {
+        "name": "A running bad project",
+        "client": 2,
+        "rate": "3.00",
+        "rate_unit": "hr",
+        "start_date": "2018-08-01",
+        "end_date": null
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 7,
+    "fields": {
+        "name": "Another good project with future end date",
+        "client": 1,
+        "rate": "4000.00",
+        "rate_unit": "day",
+        "start_date": "2018-08-01",
+        "end_date": "2033-08-01"
+    }
+}
+]

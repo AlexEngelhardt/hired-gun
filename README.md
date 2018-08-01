@@ -14,8 +14,13 @@ Best order for creating a new app:
   - Determine your models, fields, and relationships
   - Create the `models.py`
 - `admin.py`: Create admin views
+  - To login to the admin backend and verify:
+    - Update `settings.py`: add ProjectsConfig to `INSTALLED_APPS`
+    - `makemigrations projects` 
+    - `migrate`
 - Fixtures
-  - From the admin backend, add sample data and export it to JSON fixtures
+  - From the admin backend, add sample data
+  - export all models to JSON fixtures: `python3 manage.py dumpdata --indent=4 projects.Client > projects/fixtures/Client.json` (etc. for Project and Session)
 - Frontend:
   - Determine what views you want
     - For the beginning, stick with one ListView and one DetailView per model
