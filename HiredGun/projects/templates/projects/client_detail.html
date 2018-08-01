@@ -1,0 +1,17 @@
+<h1>Client: {{ client }}</h1>
+
+<p>{{ client.name }}</p>
+
+<p>Bill to: {{ client.billing_address }}</p>
+
+<p>Invoice Email: {{ client.invoice_email }}</p>
+
+<p>Payment Terms: {{ client.payment_terms }}</p>
+
+<h3>Projects for this client</h3>
+
+<ul>
+  {% for project in client.project_set.all %}
+    <li><a href="{% url 'projects:project-detail' project.id %}">{{ project.name }}</a></li>
+  {% endfor %}
+</ul>

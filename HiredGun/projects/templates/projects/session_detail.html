@@ -1,0 +1,15 @@
+<h1>Session from {{ session.date }}</h1>
+
+<dl>
+  <dd>Client</dd>
+  <dt>{{ session.project.client }}</dt>
+  <dd>Project</dd>
+  <dt>{{ session.project }} (paying {{ session.project.rate }} per {{ session.project.rate_unit }})</dt>
+  <dd>Date</dd>
+  <dt>{{ session.date }}</dt>
+  <dd>Duration</dd>
+  <dt>From {{ session.start_time }} to {{ session.end_time }}</dt>
+  <dd>Description</dd>
+  <dt>{{ session.description }}</dt>
+</dl>
+

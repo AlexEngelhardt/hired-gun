@@ -1,0 +1,13 @@
+<h1>Your clients</h1>
+
+{% if clients %}
+<ul>
+  {% for client in clients %}
+  <li>
+    <a href="{% url 'projects:client-detail' client.id %}">{{ client.name }}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No clients are available.</p>
+{% endif %}

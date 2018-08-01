@@ -22,11 +22,13 @@ Best order for creating a new app:
   - From the admin backend, add sample data
   - export all models to JSON fixtures: `python3 manage.py dumpdata --indent=4 projects.Client > projects/fixtures/Client.json` (etc. for Project and Session)
 - Frontend:
-  - Determine what views you want
-    - For the beginning, stick with one ListView and one DetailView per model
+  - For the beginning, stick with one ListView and one DetailView per model
   - `urls.py`
-  - HTML templates
   - `views.py`
+  - HTML templates
+  - Try these views.
+  - If they work, determine what other views you want
+	- that's probably "create, update, delete", for now
 - Tests
   - Now start writing tests for the existing code
   - From now on, go TDD and write tests first

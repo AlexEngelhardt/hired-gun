@@ -1,0 +1,16 @@
+<h1>Your projects</h1>
+
+{% if projects %}
+<ul>
+  {% for project in projects %}
+  <li>
+    <a href="{% url 'projects:project-detail' project.id %}">{{ project.name }}</a> <br />
+    Start {{ project.start_date }} <br />
+    End {{ project.end_date }} <br />
+    Rate: {{ project.rate }} € per {{ project.rate_unit }}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No projects are available.</p>
+{% endif %}

@@ -1,0 +1,13 @@
+<h1>Project: {{ project }}</h1>
+
+<p>It pays {{ project.rate }} per {{ project.rate_unit }}</p>
+
+<p>It runs from {{ project.start_date }} until {{ project.end_date }}</p>
+
+<p>Sessions logged:</p>
+
+<ul>
+  {% for session in project.session_set.all %}
+    <li>A session from {{ session.date }}</li>
+  {% endfor %}
+</ul>

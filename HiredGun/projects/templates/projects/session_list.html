@@ -1,0 +1,15 @@
+<h1>Your sessions</h1>
+
+{% if sessions %}
+<ul>
+  {% for session in sessions %}
+  <li>
+    <a href="{% url 'projects:session-detail' session.id %}">{{ session }}</a> <br />
+    Start {{ session.start_time }} <br />
+    End {{ session.end_time }} 
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No sessions are available.</p>
+{% endif %}
