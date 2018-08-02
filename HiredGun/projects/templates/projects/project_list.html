@@ -4,15 +4,16 @@
 
 <h1>Your projects</h1>
 
+<a href="{% url 'projects:add-project' %}"><span class="glyphicon glyphicon-plus"></span> Add project</a>
+
 {% if projects %}
 <ul>
   {% for project in projects %}
   <li>
-    <a href="{% url 'projects:project-detail' project.id %}">{{ project.name }}</a> <br />
-    <form action="{% url 'projects:remove-project' project.id %}" method="post">
-      {% csrf_token %}
-      <input type="submit" value="delete project" />
-    </form>
+    <a href="{% url 'projects:project-detail' project.id %}">{{ project.name }}</a>
+    <a href="{% url 'projects:edit-project' project.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="{% url 'projects:delete-project' project.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+
     <ul>
     <li>Start {{ project.start_date }}</li>
     <li>End {{ project.end_date }}</li>

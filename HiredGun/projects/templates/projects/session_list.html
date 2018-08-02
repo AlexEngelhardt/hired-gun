@@ -4,13 +4,19 @@
 
 <h1>Your sessions</h1>
 
+<a href="{% url 'projects:add-session' %}"><span class="glyphicon glyphicon-plus"></span> Add session</a>
+
 {% if sessions %}
 <ul>
   {% for session in sessions %}
   <li>
-    <a href="{% url 'projects:session-detail' session.id %}">{{ session }}</a> <br />
-    Start {{ session.start_time }} <br />
-    End {{ session.end_time }} 
+    <a href="{% url 'projects:session-detail' session.id %}">{{ session }}</a>
+    <a href="{% url 'projects:edit-session' session.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="{% url 'projects:delete-session' session.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+    <ul>
+    <li>Start {{ session.start_time }}</li>
+    <li>End {{ session.end_time }}</li>
+    </ul>
   </li>
   {% endfor %}
 </ul>

@@ -2,7 +2,15 @@
 
 {% block content %}
 
-<h1>Session from {{ session.date }}</h1>
+<h1>
+  Session from {{ session.date }}
+  <a class="btn btn-default" href="{% url 'projects:edit-session' pk=session.pk %}">
+    <span class="glyphicon glyphicon-pencil"></span>
+  </a>
+  <a class="btn btn-default" href="{% url 'projects:delete-session' pk=session.pk %}">
+    <span class="glyphicon glyphicon-trash"></span>
+  </a>
+</h1>
 
 <dl>
   <dd>Client</dd>

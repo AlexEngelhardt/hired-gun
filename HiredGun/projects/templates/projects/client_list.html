@@ -4,11 +4,15 @@
 
 <h1>Your clients</h1>
 
+<a href="{% url 'projects:add-client' %}"><span class="glyphicon glyphicon-plus"></span> Add client</a>
+
 {% if clients %}
 <ul>
   {% for client in clients %}
   <li>
     <a href="{% url 'projects:client-detail' client.id %}">{{ client.name }}</a>
+    <a href="{% url 'projects:edit-client' client.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="{% url 'projects:delete-client' client.id %}"><span class="glyphicon glyphicon-trash"></span></a>
   </li>
   {% endfor %}
 </ul>
