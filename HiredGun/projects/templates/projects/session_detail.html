@@ -1,3 +1,7 @@
+{% extends 'projects/base.html' %}
+
+{% block content %}
+
 <h1>Session from {{ session.date }}</h1>
 
 <dl>
@@ -13,3 +17,4 @@
   <dt>{{ session.description }}</dt>
 </dl>
 
+{% endblock %}

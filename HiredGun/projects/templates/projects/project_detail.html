@@ -1,3 +1,7 @@
+{% extends 'projects/base.html' %}
+
+{% block content %}
+
 <h1>Project: {{ project }}</h1>
 
 <p>It pays {{ project.rate }} per {{ project.rate_unit }}</p>
@@ -39,3 +43,5 @@
     <li>A session from {{ session.date }}</li>
   {% endfor %}
 </ul>
+
+{% endblock %}

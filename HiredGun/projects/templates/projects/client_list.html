@@ -1,3 +1,7 @@
+{% extends 'projects/base.html' %}
+
+{% block content %}
+
 <h1>Your clients</h1>
 
 {% if clients %}
@@ -11,3 +15,5 @@
 {% else %}
 <p>No clients are available.</p>
 {% endif %}
+
+{% endblock %}
