@@ -1,0 +1,51 @@
+{% extends 'projects/base.html' %}
+
+{% block content %}
+
+<h1>Your reports</h1>
+
+<hr>
+
+<h3>Get fixed report by URL</h3>
+
+<p><a href="/reports/2018/07">Report for Jul 18</a></p>
+
+<hr>
+
+<h3>Get a monthly report by GET</h3>
+
+<form method="GET" action="show_report_GET">
+  {% csrf_token %}
+  <p>
+  <label for="year">Year</label>
+  <input type="number" name="year" value="{{ year_of_previous_month }}" />
+  </p>
+  <p>
+  <label for="month">Month</label>
+  <input type="number" name="month" value="{{ previous_month }}" />
+  </p>
+  <p>
+  <input type="submit" value="Get Report" />
+  </p>
+</form>
+
+<hr>
+
+<h3>Get a custom range report via POST</h3>
+
+<form method="POST" action="show_report_POST">
+  {% csrf_token %}
+  <p>
+  <label for="from">From: </label>
+  <input type="date" name="from" value="{{ first_of_prev_month }}" />
+  </p>
+  <p>
+  <label for="to">To: </label>
+  <input type="date" name="to" value="{{ last_of_prev_month }}" />
+  </p>
+  <p>
+  <input type="submit" value="Get Report" />
+  </p>
+</form>
+
+{% endblock %}

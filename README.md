@@ -2,6 +2,10 @@
 
 A webapp for freelancers to track clients, projects, work sessions, and invoices
 
+### How to try this out
+
+See the README.md file in the HiredGun subdirectory here.
+
 ### Django notes
 
 Best order for creating a new app:

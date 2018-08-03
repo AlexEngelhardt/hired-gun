@@ -8,4 +8,4 @@ python3 manage.py loaddata projects/fixtures/Client.json
 python3 manage.py loaddata projects/fixtures/Project.json 
 python3 manage.py loaddata projects/fixtures/Session.json 
 ```
-- Browse to <http://127.0.0.1:8000/projects> and view/edit/delete some data of your own
+- Browse to <http://127.0.0.1:8000> and view/edit/delete some data of your own
