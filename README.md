@@ -12,6 +12,8 @@ python3 manage.py loaddata projects/fixtures/Client.json
 python3 manage.py loaddata projects/fixtures/Project.json 
 python3 manage.py loaddata projects/fixtures/Session.json 
 ```
+
+- Run `python3 manage.py runserver` to start your local development webserver
 - Browse to <http://127.0.0.1:8000> and view/edit/delete some data of your own
 
 ### Django notes
