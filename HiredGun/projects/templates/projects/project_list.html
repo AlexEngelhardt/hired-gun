@@ -7,21 +7,39 @@
 <p><a href="{% url 'projects:add-project' %}"><span class="glyphicon glyphicon-plus"></span> Add project</a></p>
 
 {% if projects %}
-<ul>
-  {% for project in projects %}
-  <li>
-    <a href="{% url 'projects:project-detail' project.id %}">{{ project.name }}</a>
-    <a href="{% url 'projects:edit-project' project.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
-    <a href="{% url 'projects:delete-project' project.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+<table class="table">
 
-    <ul>
-    <li>Start {{ project.start_date }}</li>
-    <li>End {{ project.end_date }}</li>
-    <li>Rate: {{ project.rate }} € per {{ project.rate_unit }}</li>
-    </ul>
-  </li>
+  <thead>
+    <tr>
+      <th scope="col">Project</th>
+      <th scope="col">Client</th>
+      <th scope="col">Rate</th>
+      <th scope="col">Active?</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  
+  {% for project in projects %}
+  <tr>
+    <td>
+      <a href="{% url 'projects:project-detail' project.id %}">{{ project.name }}</a>
+    </td>
+    <td>
+      <a href="{% url 'projects:client-detail' project.client.id %}">{{ project.client.name }}</a>
+    </td>
+    <td>
+      {{ project.rate }} / {{ project.rate_unit }}
+    </td>
+    <td>
+      {{ project.is_active }}
+    </td>
+    <td>
+      <a href="{% url 'projects:edit-project' project.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+      <a href="{% url 'projects:delete-project' project.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+    </td>
+  </tr>
   {% endfor %}
-</ul>
+</table>
 {% else %}
 <p>No projects are available.</p>
 {% endif %}

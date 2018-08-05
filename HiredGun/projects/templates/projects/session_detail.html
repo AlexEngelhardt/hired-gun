@@ -12,17 +12,20 @@
   </a>
 </h1>
 
-<dl>
-  <dd>Client</dd>
-  <dt>{{ session.project.client }}</dt>
-  <dd>Project</dd>
-  <dt>{{ session.project }} (paying {{ session.project.rate }} per {{ session.project.rate_unit }})</dt>
-  <dd>Date</dd>
-  <dt>{{ session.date }}</dt>
-  <dd>Duration</dd>
-  <dt>From {{ session.start_time }} to {{ session.end_time }}</dt>
-  <dd>Description</dd>
-  <dt>{{ session.description }}</dt>
-</dl>
+<h4>Project</h4>
+
+<p>Client: {{ session.project.client }}</p>
+<p>Project: {{ session.project }}</p>
+
+<h4>Details</h4>
+<p>Worked {{ session.units_worked }} {{ session.project.rate_unit }}s </p>
+<p>Duration: From {{ session.start_time }} to {{ session.end_time }}</p>
+<p>Description: {{ session.description | linebreaks }}</p>
+
+<h4>Earned</h4>
+
+<p>Earned {{ session.get_money_earned }}</p>
+
+<p>(paying {{ session.project.rate }} per {{ session.project.rate_unit }})</p>
 
 {% endblock %}

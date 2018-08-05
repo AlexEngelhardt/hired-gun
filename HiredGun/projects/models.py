@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class Client(models.Model):
     name = models.CharField(max_length=256)
-    billing_address = models.CharField(max_length=512)
+    billing_address = models.TextField(null=True, blank=True)
     invoice_email = models.EmailField(max_length=256, null=True, blank=True)
     payment_terms = models.CharField(max_length=20,
                                      choices=(
@@ -32,11 +32,13 @@ class Project(models.Model):
                                  choices=(
                                      ('hr', 'Hour'),
                                      ('day', 'Day'),
+                                     ('fixed', 'Fixed'),
                                  ),
                                  default='hr')
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
-
+    notes = models.TextField(null=True, blank=True)
+    
     def __str__(self):
         return self.name
 
@@ -67,12 +69,28 @@ class Project(models.Model):
 class Session(models.Model):
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
-    break_duration = models.DurationField(default=datetime.timedelta(minutes=30))
-    description = models.TextField()
-    # If I'll use a 'duration' field, it should be blank=True but null=False, so that it has to be auto-generated
+
+    # I want to supply either "units worked" (e.g. 0.5 days), or a start and end time, and have
+    #  the app compute the number of hours / days itself
+    units_worked = models.DecimalField(max_digits=4, decimal_places=2)
     
+    # Only units_worked is required. But if you supply these 3 fields, it can be auto-computed later
+    #  (you might have to use that Ajax thingy, or jQuery, or whatever)
+    start_time = models.TimeField(blank=True, null=True)
+    end_time = models.TimeField(blank=True, null=True)
+    break_duration = models.DurationField(blank=True, null=True) # default=datetime.timedelta(minutes=30))
+
+    description = models.TextField(blank=True, null=True)
+    # If I'll use a 'duration' field, it should be blank=True but null=False, so that it has to be auto-generated
+
+    def get_units_worked(self):
+        # TODO maybe I can auto-compute this value later, instead of specifying it every time
+        return self.units_worked
+    
+    def get_money_earned(self):
+        # TODO this is redunantly computed in views.py too :(
+        return self.units_worked * self.project.rate
+
     def __str__(self):
         return 'Session in ' + str(self.project) + \
            ' for ' + str(self.project.client)  + \

@@ -5,6 +5,7 @@
     "fields": {
         "project": 7,
         "date": "2018-08-01",
+	"units_worked": 3.5,
         "start_time": "06:00:00",
         "end_time": "10:00:00",
         "break_duration": "00:30:00",
@@ -17,6 +18,7 @@
     "fields": {
         "project": 6,
         "date": "2018-07-31",
+	"units_worked": 8.5,
         "start_time": "08:00:00",
         "end_time": "17:00:00",
         "break_duration": "00:30:00",
@@ -29,6 +31,7 @@
     "fields": {
         "project": 6,
         "date": "2018-07-23",
+	"units_worked": 8,
         "start_time": "09:00:00",
         "end_time": "18:00:00",
         "break_duration": "01:00:00",

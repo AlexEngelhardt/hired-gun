@@ -1,6 +1,7 @@
 import datetime
 
 from django.shortcuts import render
+from django.db.models import F, Sum
 
 from projects.models import Session
 
@@ -19,17 +20,22 @@ def index(request):
     }
     return render(request, 'reports/index.html', context)
 
+def get_total_earned(sessions):
+    return sessions.aggregate(cash = Sum(F('units_worked') * F('project__rate')))['cash']
+
 def report_month(request, year, month):
     sessions = Session.objects.filter(
         date__year=year,
         date__month=month
     )
+    
     context = {
         'sessions': sessions,
         'year': year,
-        'month': month
+        'month': month,
+        'total_earned': get_total_earned(sessions)
     }
-    return render(request, 'reports/report_month.html', context)
+    return render(request, 'reports/report.html', context)
 
 def report_month_GET(request):
     year = request.GET.get('year')
@@ -40,12 +46,14 @@ def report_month_GET(request):
         date__year=year,
         date__month=month
     )
+    
     context = {
         'sessions': sessions,
         'year': year,
-        'month': month
+        'month': month,
+        'total_earned': get_total_earned(sessions)
     }
-    return render(request, 'reports/report_month.html', context)
+    return render(request, 'reports/report.html', context)
 
 def report_POST(request):
 
@@ -59,6 +67,7 @@ def report_POST(request):
     context = {
         'sessions': sessions,
         'from': from_date,
-        'to': to_date
+        'to': to_date,
+        'total_earned': get_total_earned(sessions)
     }
-    return render(request, 'reports/report_custom.html', context)
+    return render(request, 'reports/report.html', context)

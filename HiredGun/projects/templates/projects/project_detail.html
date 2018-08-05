@@ -13,15 +13,29 @@
 
 </h1>
 
-<p>It pays {{ project.rate }} per {{ project.rate_unit }}</p>
+<h4>Client</h4>
 
-<p>It runs from {{ project.start_date }} until {{ project.end_date }}</p>
+{{ project.client }}
+
+<h4>Running</h4>
+
+{% if project.is_active %}
+  <p>Project is <strong>active</strong></p>
+  <p>It started on {{ project.start_date }}</p>
+{% else %}
+  <p>Project is <strong>not active</strong></p>
+  <p>It ran from {{ project.start_date }} until {{ project.end_date }}</p>
+{% endif %}
+
+<h4>Paying</h4>
+
+<p>{{ project.rate }} per {{ project.rate_unit }}</p>
 
 <h3>Sessions logged:</h3>
 
 <ul>
   {% for session in project.session_set.all %}
-    <li>A session from {{ session.date }}</li>
+    <li><a href="{% url 'projects:session-detail' pk=session.pk %}">{{ session.date }}</a></li>
   {% endfor %}
 </ul>
 

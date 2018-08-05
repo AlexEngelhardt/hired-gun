@@ -2,20 +2,24 @@
 
 {% block content %}
 
-<h1>Your sessions</h1>
-
-<p><a href="{% url 'projects:add-session' %}"><span class="glyphicon glyphicon-plus"></span> Add session</a></p>
-
+{% if month %}
+  <h1>Report for {{ month }}/{{ year }}</h1>
+{% else %}
+  <h1>Report from {{ from }} to {{ to }}</h1>
+{% endif %}
+  
 {% if sessions %}
-<table class="table">
+
+<h2 class="text-center">Total earned: {{ total_earned }}€</h2>
+
+<table class="table table-condensed table-hover table-bordered table-striped">
 
   <thead>
     <tr>
-      <th scope="col">Date</th>
+      <th scope="col">Session Date</th>
       <th scope="col">Client</th>
       <th scope="col">Units</th>
       <th scope="col">Earned</th>
-      <th scope="col">Actions</th>
     </tr>
   </thead>
   
@@ -33,15 +37,11 @@
     <td>
       {{ session.get_money_earned }}
     </td>
-    <td>
-      <a href="{% url 'projects:edit-session' session.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
-      <a href="{% url 'projects:delete-session' session.id %}"><span class="glyphicon glyphicon-trash"></span></a>
-    </td>
   </tr>
   {% endfor %}
 </table>
 {% else %}
-<p>No sessions are available.</p>
+<p>Selected timespan had no sessions. You lazy!</p>
 {% endif %}
 
 {% endblock %}

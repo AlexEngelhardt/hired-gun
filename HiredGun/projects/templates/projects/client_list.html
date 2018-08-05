@@ -7,15 +7,25 @@
 <p><a href="{% url 'projects:add-client' %}"><span class="glyphicon glyphicon-plus"></span> Add client</a></p>
 
 {% if clients %}
-<ul>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Client</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
   {% for client in clients %}
-  <li>
-    <a href="{% url 'projects:client-detail' client.id %}">{{ client.name }}</a>
-    <a href="{% url 'projects:edit-client' client.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
-    <a href="{% url 'projects:delete-client' client.id %}"><span class="glyphicon glyphicon-trash"></span></a>
-  </li>
+  <tr>
+    <td>
+      <a href="{% url 'projects:client-detail' client.id %}">{{ client.name }}</a>
+    </td>
+    <td>
+      <a href="{% url 'projects:edit-client' client.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+      <a href="{% url 'projects:delete-client' client.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+    </td>
+  </tr>
   {% endfor %}
-</ul>
+</table>
 {% else %}
 <p>No clients are available.</p>
 {% endif %}
