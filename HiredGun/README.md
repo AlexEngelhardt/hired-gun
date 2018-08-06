@@ -10,6 +10,7 @@
 
 **Reports**
 
+- Unify views/templates/etc as much as possible
 - Report per client and/or per project (a precursor for the invoice app)
 
 **Add/Edit session form**

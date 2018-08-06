@@ -3,7 +3,15 @@
 {% block content %}
 
 <h1>Report from {{ from }} to {{ to }}</h1>
- 
+
+{% if client %}
+<p>Subsetted for Client: {{ client }}</p>
+{% endif %}
+
+{% if project %}
+<p>Subsetted for Project: {{ project }}</p>
+{% endif %}
+
 {% if sessions %}
 
 <h2 class="text-center">Total earned: {{ total_earned }}€</h2>
