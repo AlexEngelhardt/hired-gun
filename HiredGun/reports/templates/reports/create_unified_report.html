@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>Create a per-client report</h1>
+<h1>Create a UNIFIED report</h1>
 
 <h3>Get a monthly report</h3>
 
@@ -10,8 +10,18 @@
   <p>
     <label for="client">Client</label>
     <select name="client">
+      <option value="" disabled selected>--- all ---</option>
       {% for client in clients %}
         <option value="{{ client.id }}">{{ client.name }}</option>
+      {% endfor %}
+    </select>
+  </p>
+  <p>
+    <label for="project">Project</label>
+    <select name="project">
+      <option value="" disabled selected>--- all ---</option>
+      {% for project in projects %}
+        <option value="{{ project.id }}">{{ project.name }}</option>
       {% endfor %}
     </select>
   </p>
@@ -33,11 +43,21 @@
 <h3>Get a custom range report</h3>
 
 <form method="GET" action="earnings_report">
-  <p>
+    <p>
     <label for="client">Client</label>
     <select name="client">
+      <option value="" disabled selected>--- all ---</option>
       {% for client in clients %}
         <option value="{{ client.id }}">{{ client.name }}</option>
+      {% endfor %}
+    </select>
+  </p>
+  <p>
+    <label for="project">Project</label>
+    <select name="project">
+      <option value="" disabled selected>--- all ---</option>
+      {% for project in projects %}
+        <option value="{{ project.id }}">{{ project.name }}</option>
       {% endfor %}
     </select>
   </p>

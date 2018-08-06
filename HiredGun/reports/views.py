@@ -75,23 +75,12 @@ def index(request):
     return render(request, 'reports/index.html', context)
 
 
-def total_earnings_form(request):
-    context = get_autofill_context()
-    return render(request, 'reports/create_total_report.html', context)
-
-
-def per_client_form(request):
-    context = get_autofill_context()
-    context['clients'] = Client.objects.all()
-    return render(request, 'reports/create_client_report.html', context)
-
-
-def per_project_form(request):
+def unified_form(request):
     context = get_autofill_context()
     context['projects'] = Project.objects.all()
-    return render(request, 'reports/create_project_report.html', context)
-
-
+    context['clients'] = Client.objects.all()
+    return render(request, 'reports/create_unified_report.html', context)
+    
 
 def build_from_and_to_date(request):
     if 'from' in request.GET:

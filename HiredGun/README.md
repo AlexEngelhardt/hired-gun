@@ -3,14 +3,12 @@
 
 /* also see Arc project sheet */
 
+
 **Authentication**
 
 - read official docs
 - cross-check with DjangoGirls tutorial
 
-**Reports**
-
-- Unify views/templates/etc as much as possible
 
 **Add/Edit session form**
 
@@ -21,6 +19,7 @@
 - Behind "units worked", you should print the actual unit (day, hour, or fixed)
 - When editing, the 'date' field is not populated with the existing date. Maybe because the format in the HTML form is `mm/dd/yyyy` when it should be `yyyy-mm-dd`?
 
+
 **General**
 
 - Unify language or add i18n
@@ -29,6 +28,7 @@
 - The Session model should have functions `units_worked()` and `money_earned()` so that I can compute reports
   - Ideally: Never compute this redundantly. Currently, you are. (see `reports/views.py:get_total_earned()`)
 - The date in the ModelForms (i.e. on the frontend) should be shown as yyyy-mm-dd
+
 
 **Someday/Maybe**
 
