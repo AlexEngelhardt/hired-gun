@@ -12,10 +12,6 @@
   <body>
     <div class="page-header">
       <h1 class="mytitle"><a href="/">Hired Gun</a></h1>
-          <ul>
-            <li><a href="{% url 'projects:index' %}">Home</a></li>
-            <li><a href="{% url 'reports:index' %}">Reports</a></li>
-          </ul>
     </div>
 
     <div class="navbar navbar-default">
@@ -24,6 +20,8 @@
           <li><a href="{% url 'projects:clients' %}">Clients</a></li>
           <li><a href="{% url 'projects:projects' %}">Projects</a></li>
           <li><a href="{% url 'projects:sessions' %}">Sessions</a></li>
+	  <li><a href="{% url 'reports:index' %}">Reports</a></li>
+	  <li><a href="{% url 'invoices:index' %}">Invoices</a></li>
         </ul>
       </div>
     </div>

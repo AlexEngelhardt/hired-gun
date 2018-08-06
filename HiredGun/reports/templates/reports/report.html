@@ -2,12 +2,8 @@
 
 {% block content %}
 
-{% if month %}
-  <h1>Report for {{ month }}/{{ year }}</h1>
-{% else %}
-  <h1>Report from {{ from }} to {{ to }}</h1>
-{% endif %}
-  
+<h1>Report from {{ from }} to {{ to }}</h1>
+ 
 {% if sessions %}
 
 <h2 class="text-center">Total earned: {{ total_earned }}€</h2>

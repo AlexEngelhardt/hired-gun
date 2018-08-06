@@ -12,6 +12,17 @@ python3 manage.py loaddata projects/fixtures/Session.json
 
 ### TODOs
 
+/* also see Arc project sheet */
+
+**Authentication**
+
+- read official docs
+- cross-check with DjangoGirls tutorial
+
+**Reports**
+
+- Report per client and/or per project (a precursor for the invoice app)
+
 **Add/Edit session form**
 
 - Selecting the project should be hierarchical, by first selecting the client, then the project.
@@ -24,6 +35,10 @@ python3 manage.py loaddata projects/fixtures/Session.json
 **Projects List**
 
 - The "Active?" field should show something pretty (checkbox?), not True/False
+
+**Design/Sugar**
+
+- Pretty Bootstrap buttons for the CRUD links (cf. djangogirls blog, e.g. "Add Comment")
 
 **General**
 

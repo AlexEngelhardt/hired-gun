@@ -5,7 +5,10 @@ app_name = 'reports'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('<int:year>/<int:month>/', views.report_month, name='report-month'),
-    path('show_report_GET', views.report_month_GET, name='report-month-get'),
-    path('show_report_POST', views.report_POST, name='report-post'),
+    path('total_month', views.total_month, name='total-month'),
+    path('total_custom', views.total_custom, name='total-custom'),  # TODO unify these two into a total-earnings-report
+    
+    path('total_earnings', views.request_total_earnings_report, name='total-earnings'),
+    path('per_client', views.per_client, name='per-client'),
+    path('per_project', views.per_project, name='per-project'),
 ]

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # 'projects.apps.ProjectsConfig',  # If I use this, static files don't work anymore :(
     'projects',
     'reports',
+    'invoices',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
