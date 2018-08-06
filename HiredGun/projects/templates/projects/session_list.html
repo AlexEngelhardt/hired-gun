@@ -28,10 +28,10 @@
       {{ session.project.client }}
     </td>
     <td>
-      {{ session.units_worked }} {{ session.project.rate_unit }}s
+      {{ session.units_worked | floatformat:"-2" }} {{ session.project.rate_unit }}{% if session.units_worked != 1 %}s{% endif %}
     </td>
     <td>
-      {{ session.get_money_earned }}
+      {{ session.get_money_earned | floatformat:"2" }}
     </td>
     <td>
       <a href="{% url 'projects:edit-session' session.id %}"><span class="glyphicon glyphicon-pencil"></span></a>

@@ -11,7 +11,6 @@
 **Reports**
 
 - Unify views/templates/etc as much as possible
-- Report per client and/or per project (a precursor for the invoice app)
 
 **Add/Edit session form**
 
@@ -20,19 +19,10 @@
 	- Select the client not from a dropdown, but from a one-click list
       - Then a conditional display of projects
 - Behind "units worked", you should print the actual unit (day, hour, or fixed)
-- When editing, the 'date' field is not populated with the existing date. Maybe because the format in the HTML form is `mm/dd/yyyy`?
-
-**Projects List**
-
-- The "Active?" field should show something pretty (checkbox?), not True/False
-
-**Design/Sugar**
-
-- Pretty Bootstrap buttons for the CRUD links (cf. djangogirls blog, e.g. "Add Comment")
+- When editing, the 'date' field is not populated with the existing date. Maybe because the format in the HTML form is `mm/dd/yyyy` when it should be `yyyy-mm-dd`?
 
 **General**
 
-- Pretty rounding (2 digits for all monetary values, and 0 digits iff rate_units is integer)
 - Unify language or add i18n
   - Why do I have a comma as decimal sign, not a period?
 - All "delete" buttons should have a confirmation pop-up, or redirect to a dedicated confirmation template.
@@ -42,4 +32,4 @@
 
 **Someday/Maybe**
 
-- Use [django-tables](https://django-tables2.readthedocs.io/en/latest/) instead of manually written HTML tables
+- Use [django-tables2](https://django-tables2.readthedocs.io/en/latest/) instead of manually written HTML tables. They are also sortable by column

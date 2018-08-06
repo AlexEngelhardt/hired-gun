@@ -31,7 +31,7 @@
       {{ project.rate }} / {{ project.rate_unit }}
     </td>
     <td>
-      {{ project.is_active }}
+      {% if project.is_active %} yes {% endif %}
     </td>
     <td>
       <a href="{% url 'projects:edit-project' project.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
