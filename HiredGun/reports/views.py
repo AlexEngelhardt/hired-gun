@@ -52,6 +52,7 @@ def prepare_report(from_date, to_date, client_id=None, project_id=None):
     
     return context
 
+
 def get_autofill_context():
     last_of_prev_month = datetime.date.today().replace(day=1) - datetime.timedelta(days=1)
     first_of_prev_month = last_of_prev_month.replace(day=1)
@@ -65,6 +66,7 @@ def get_autofill_context():
         'last_of_prev_month': last_of_prev_month.strftime('%Y-%m-%d')
     }
     return context
+
 
 #### Views
 
@@ -111,23 +113,14 @@ def build_from_and_to_date(request):
     return [ from_date, to_date ]
 
 
-def total_earnings_report(request):
+def earnings_report(request):
     from_date, to_date = build_from_and_to_date(request)
-    context = prepare_report(from_date, to_date)
 
-    return render(request, 'reports/report.html', context)
-
-
-def per_client_report(request):
-    from_date, to_date = build_from_and_to_date(request)
-    context = prepare_report(from_date, to_date, client_id=request.GET.get('client'))
-
-    return render(request, 'reports/report.html', context)
-
-
-def per_project_report(request):
-    from_date, to_date = build_from_and_to_date(request)
-    context = prepare_report(from_date, to_date, project_id=request.GET.get('project'))
+    # I think these default to None if they're not submitted
+    client_id = request.GET.get('client')
+    project_id = request.GET.get('project')
+    
+    context = prepare_report(from_date, to_date, client_id, project_id)
 
     return render(request, 'reports/report.html', context)
 
