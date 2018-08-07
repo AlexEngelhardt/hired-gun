@@ -15,6 +15,9 @@
 - read official docs
 - cross-check with DjangoGirls tutorial
 
+**Reports**
+
+- Can reports.html use a generic list view? What's the advantage in such a (more custom) view?
 
 **Add/Edit session form**
 
@@ -39,6 +42,7 @@
 **Someday/Maybe**
 
 - Use [django-tables2](https://django-tables2.readthedocs.io/en/latest/) instead of manually written HTML tables. They are also sortable by column
+- Multiple currencies besides €
 
 **Testing**
 

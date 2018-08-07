@@ -91,7 +91,7 @@ def build_from_and_to_date(request):
 #### Views
 
 
-def unified_form(request):
+def create_report_form(request):
     context = get_initial_values()
     context['projects'] = Project.objects.all()
     context['clients'] = Client.objects.all()
