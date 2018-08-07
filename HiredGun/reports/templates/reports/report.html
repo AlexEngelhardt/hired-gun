@@ -26,20 +26,28 @@
       <th scope="col">Earned</th>
     </tr>
   </thead>
-  
-  {% for session in sessions %}
-  <tr>
+
+  {% for today, todays_sessions in sessions_per_date.items %}
+  <tr{% if today.weekday > 4 %} class="weekend"{% endif %}>
     <td>
-      <a href="{% url 'projects:session-detail' session.id %}">{{ session.date }}</a>
+      {{ today }}
     </td>
     <td>
-      {{ session.project.client }}
+      {% for session in todays_sessions %}
+        {{ session.project.client }} <br />
+      {% endfor %}
     </td>
     <td>
-      {{ session.units_worked | floatformat:"-2" }} {{ session.project.rate_unit }}{% if session.units_worked != 1 %}s{% endif %}
+      {% for session in todays_sessions %}
+        {{ session.units_worked | floatformat:"-2" }} {{ session.project.rate_unit }}{% if session.units_worked != 1 %}s{% endif %} <br />
+      {% endfor %}
     </td>
-    <td>
-      {{ session.get_money_earned | floatformat:"2" }}
+    <td align="right">
+      {% for session in todays_sessions %}
+      <a href="{% url 'projects:session-detail' session.id %}">
+        {{ session.get_money_earned | floatformat:"2" }}
+      </a> <br />
+      {% endfor %}
     </td>
   </tr>
   {% endfor %}

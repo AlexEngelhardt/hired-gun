@@ -3,6 +3,12 @@
 
 /* also see Arc project sheet */
 
+/* also grep this repo for TODO within .py files */
+
+**Reports forms.Forms**
+
+- Empty 'client' fields still fail. A custom widget may help, which would make the empty choice 'disabled' instead of passing ""
+- The ModelMultipleChoiceField gets passed in the GET url as `&project=1&project=2`. My code currently takes the last project only there; it doesn't check if there's multiple projects submitted.
 
 **Authentication**
 

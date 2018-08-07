@@ -1,10 +1,16 @@
 import datetime
+import pandas as pd
 
 from django.shortcuts import render
 from django.db.models import F, Sum
 
 from projects.models import Client, Project, Session
+from .forms import ReportMonthlyForm, ReportCustomForm
 
+# I must store this function externally to avoid circular dependencies
+# (ImportError: cannot import name 'get_initial_values').
+# Otherwise, views.py would import .forms, and forms.py would import a fct from views.py
+from .helpers import get_initial_values
 
 #### Helper functions
 
@@ -37,12 +43,18 @@ def prepare_report(from_date, to_date, client_id=None, project_id=None):
         sessions = sessions.filter(
             project=project_id
         )
-    
+
+    date_range = pd.date_range(from_date, to_date).date
+
+    sessions_per_date = {today: sessions.filter(date=today) for today in date_range}
+
     context = {
-        'sessions': sessions,
+        'sessions': sessions,  # obsolete if sessions_per_date will work
         'from': from_date,
         'to': to_date,
-        'total_earned': get_total_earned(sessions)
+        'date_range': date_range,
+        'sessions_per_date': sessions_per_date,
+        'total_earned': get_total_earned(sessions),
     }
 
     if client_id is not None:
@@ -54,19 +66,6 @@ def prepare_report(from_date, to_date, client_id=None, project_id=None):
     return context
 
 
-def get_autofill_context():
-    last_of_prev_month = datetime.date.today().replace(day=1) - datetime.timedelta(days=1)
-    first_of_prev_month = last_of_prev_month.replace(day=1)
-    previous_month = last_of_prev_month.month
-    year_of_previous_month = last_of_prev_month.year
-
-    context = {
-        'previous_month': previous_month,
-        'year_of_previous_month': year_of_previous_month,
-        'first_of_prev_month': first_of_prev_month.strftime('%Y-%m-%d'),
-        'last_of_prev_month': last_of_prev_month.strftime('%Y-%m-%d')
-    }
-    return context
 
 
 def build_from_and_to_date(request):
@@ -93,9 +92,11 @@ def build_from_and_to_date(request):
 
 
 def unified_form(request):
-    context = get_autofill_context()
+    context = get_initial_values()
     context['projects'] = Project.objects.all()
     context['clients'] = Client.objects.all()
+    context['monthly_form'] = ReportMonthlyForm()
+    context['custom_form'] = ReportCustomForm()
     return render(request, 'reports/create_report.html', context)
     
 
