@@ -8,6 +8,7 @@ from projects.models import Client, Project, Session
 
 #### Helper functions
 
+
 def get_total_earned(sessions):
     return sessions.aggregate(cash = Sum(F('units_worked') * F('project__rate')))['cash']
 
@@ -68,20 +69,6 @@ def get_autofill_context():
     return context
 
 
-#### Views
-
-def index(request):
-    context = {}
-    return render(request, 'reports/index.html', context)
-
-
-def unified_form(request):
-    context = get_autofill_context()
-    context['projects'] = Project.objects.all()
-    context['clients'] = Client.objects.all()
-    return render(request, 'reports/create_unified_report.html', context)
-    
-
 def build_from_and_to_date(request):
     if 'from' in request.GET:
         from_date = request.GET.get('from')
@@ -101,6 +88,16 @@ def build_from_and_to_date(request):
 
     return [ from_date, to_date ]
 
+
+#### Views
+
+
+def unified_form(request):
+    context = get_autofill_context()
+    context['projects'] = Project.objects.all()
+    context['clients'] = Client.objects.all()
+    return render(request, 'reports/create_report.html', context)
+    
 
 def earnings_report(request):
     from_date, to_date = build_from_and_to_date(request)

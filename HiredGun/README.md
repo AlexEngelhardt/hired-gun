@@ -33,3 +33,7 @@
 **Someday/Maybe**
 
 - Use [django-tables2](https://django-tables2.readthedocs.io/en/latest/) instead of manually written HTML tables. They are also sortable by column
+
+**Testing**
+
+- Start with tests asap. Wait too long and it won't happen :)
