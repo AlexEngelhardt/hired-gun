@@ -4,17 +4,27 @@
 
 <h1>Report from {{ from }} to {{ to }}</h1>
 
-{% if client %}
-<p>Subsetted for Client: {{ client }}</p>
+{% if clients %}
+<p>Subsetted for Clients:</p>
+  <ul>
+    {% for client in clients %}
+      <li>{{ client }}</li>
+    {% endfor %}
+  </ul>
 {% endif %}
 
-{% if project %}
-<p>Subsetted for Project: {{ project }}</p>
+{% if projects %}
+<p>Subsetted for Projects:</p>
+  <ul>
+    {% for project in projects %}
+      <li>{{ project }}</li>
+    {% endfor %}
+  </ul>
 {% endif %}
 
 {% if sessions %}
 
-<h2 class="text-center">Total earned: {{ total_earned }}€</h2>
+<h2 class="text-center">Total earned: {{ total_earned | floatformat:"2" }}€</h2>
 
 <table class="table table-condensed table-hover table-bordered table-striped">
 

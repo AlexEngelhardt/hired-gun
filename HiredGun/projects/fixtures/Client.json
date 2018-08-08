@@ -1,22 +1,32 @@
 [
 {
     "model": "projects.client",
-    "pk": 1,
+    "pk": 3,
     "fields": {
-        "name": "Mr. Good Client",
-        "billing_address": "His Street 3, 12345 Munich, Germany",
-        "invoice_email": "goody@example.com",
+        "name": "The Lucrative Main Client Ltd.",
+        "billing_address": "Gold Street 123\r\n83838 Gold City",
+        "invoice_email": "goldman@example.com",
         "payment_terms": "Net 30"
     }
 },
 {
     "model": "projects.client",
-    "pk": 2,
+    "pk": 4,
     "fields": {
-        "name": "Sir Bad Client",
-        "billing_address": "Bad Street 33, 54321 Munich, Germany",
-        "invoice_email": "baddy@example.com",
-        "payment_terms": "21 MFI"
+        "name": "The \"we need you 4 days per year\" Client, Inc.",
+        "billing_address": "Startup Street 4\r\n12345 Berlin",
+        "invoice_email": "hello@example.com",
+        "payment_terms": "COD"
+    }
+},
+{
+    "model": "projects.client",
+    "pk": 5,
+    "fields": {
+        "name": "The Stingy Corp GmbH",
+        "billing_address": "Cheap street 9\r\n12214 Cheapotown",
+        "invoice_email": "stingy@example.com",
+        "payment_terms": "Net 30"
     }
 }
 ]

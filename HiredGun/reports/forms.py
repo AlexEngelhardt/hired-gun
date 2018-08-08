@@ -4,6 +4,11 @@ from projects.models import Client, Project
 from .helpers import get_initial_values
 
 class ReportBaseForm(forms.Form):
+
+    # TODO should this become a @classmethod, a @staticmethod?
+    def giv():
+        return get_initial_values()
+
     client = forms.ModelChoiceField(
         queryset=Client.objects.all(),
         required=False,
@@ -20,8 +25,9 @@ class ReportMonthlyForm(ReportBaseForm):
 
     # TODO to be very clean, I should have 'initial_values' as a field of ReportBaseForm, but
     # my OOP is not good enough for that to work
-    
-    initial_values = get_initial_values()
+
+    initial_values = ReportBaseForm.giv()
+
     year = forms.IntegerField(
         required=False,
         initial=initial_values['year_of_previous_month']
@@ -34,7 +40,8 @@ class ReportMonthlyForm(ReportBaseForm):
 
 class ReportCustomForm(ReportBaseForm):
 
-    initial_values = get_initial_values()
+    initial_values = ReportBaseForm.giv()
+
     from_date = forms.DateField(
         label='From',
         required=False,

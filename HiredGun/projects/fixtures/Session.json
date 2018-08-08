@@ -1,41 +1,262 @@
 [
 {
     "model": "projects.session",
-    "pk": 1,
+    "pk": 4,
     "fields": {
-        "project": 7,
-        "date": "2018-08-01",
-	"units_worked": 3.5,
-        "start_time": "06:00:00",
-        "end_time": "10:00:00",
-        "break_duration": "00:30:00",
-        "description": "Four hours, and a 30 minute break, for a total of 3:30hrs worked"
-    }
-},
-{
-    "model": "projects.session",
-    "pk": 2,
-    "fields": {
-        "project": 6,
-        "date": "2018-07-31",
-	"units_worked": 8.5,
+        "project": 10,
+        "date": "2018-06-05",
+        "units_worked": "7.50",
         "start_time": "08:00:00",
-        "end_time": "17:00:00",
-        "break_duration": "00:30:00",
-        "description": "9hrs and 30min break, i.e. 8:30hrs worked"
+        "end_time": "16:00:00",
+        "break_duration": "00:00:30",
+        "description": "Coded some things"
     }
 },
 {
     "model": "projects.session",
-    "pk": 3,
+    "pk": 5,
     "fields": {
-        "project": 6,
+        "project": 11,
+        "date": "2018-06-18",
+        "units_worked": "8.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Aggressive copy-pasting"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 6,
+    "fields": {
+        "project": 11,
+        "date": "2018-06-19",
+        "units_worked": "7.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Things"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 7,
+    "fields": {
+        "project": 9,
+        "date": "2018-06-29",
+        "units_worked": "1.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "A whole day of lucrativity!"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 8,
+    "fields": {
+        "project": 8,
+        "date": "2018-07-02",
+        "units_worked": "8.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Ctrl-C, Ctrl-V"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 9,
+    "fields": {
+        "project": 8,
+        "date": "2018-07-03",
+        "units_worked": "8.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "E-mails"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 10,
+    "fields": {
+        "project": 9,
+        "date": "2018-07-04",
+        "units_worked": "0.50",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Talk to corporate"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 11,
+    "fields": {
+        "project": 11,
+        "date": "2018-07-05",
+        "units_worked": "7.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Approve memos"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 12,
+    "fields": {
+        "project": 10,
+        "date": "2018-07-10",
+        "units_worked": "8.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Remember birthdays"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 13,
+    "fields": {
+        "project": 8,
+        "date": "2018-07-09",
+        "units_worked": "6.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Promote synergy"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 14,
+    "fields": {
+        "project": 9,
+        "date": "2018-07-11",
+        "units_worked": "1.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Hit on Debra"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 15,
+    "fields": {
+        "project": 8,
+        "date": "2018-07-17",
+        "units_worked": "4.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Direct workflow"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 16,
+    "fields": {
+        "project": 11,
+        "date": "2018-07-12",
+        "units_worked": "6.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Send some faxes"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 17,
+    "fields": {
+        "project": 8,
+        "date": "2018-07-18",
+        "units_worked": "8.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "No promotion"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 18,
+    "fields": {
+        "project": 8,
+        "date": "2018-07-19",
+        "units_worked": "8.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Fifth of vodka"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 19,
+    "fields": {
+        "project": 8,
+        "date": "2018-07-20",
+        "units_worked": "10.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "So that's an average day for you then? (No doubt)"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 20,
+    "fields": {
+        "project": 11,
+        "date": "2018-07-21",
+        "units_worked": "6.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Micromanage"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 21,
+    "fields": {
+        "project": 9,
         "date": "2018-07-23",
-	"units_worked": 8,
-        "start_time": "09:00:00",
-        "end_time": "18:00:00",
-        "break_duration": "01:00:00",
-        "description": "9hrs minus 1hr break, for a total of 8hrs worked"
+        "units_worked": "1.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Promote synergy"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 22,
+    "fields": {
+        "project": 8,
+        "date": "2018-07-25",
+        "units_worked": "8.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Eat a bagel"
+    }
+},
+{
+    "model": "projects.session",
+    "pk": 23,
+    "fields": {
+        "project": 11,
+        "date": "2018-07-27",
+        "units_worked": "5.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Lead a workshop"
     }
 }
 ]

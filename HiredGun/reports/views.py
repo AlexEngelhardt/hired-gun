@@ -24,7 +24,7 @@ def last_day_of_month(any_day):
     return next_month - datetime.timedelta(days=next_month.day)
 
 
-def prepare_report(from_date, to_date, client_id=None, project_id=None):
+def prepare_report(from_date, to_date, client_ids=[], project_ids=[]):
     """
     Filters all relevant sessions to create a report.
     Filters a time span with the from and to arguments.
@@ -35,17 +35,20 @@ def prepare_report(from_date, to_date, client_id=None, project_id=None):
         date__lte=to_date
     )
 
-    if client_id is not None:
+    if client_ids != []:
         sessions = sessions.filter(
-            project__client=client_id
+            project__client__in=client_ids
         )
-    if project_id is not None:
+    if project_ids != []:
         sessions = sessions.filter(
-            project=project_id
+            project__in=project_ids
         )
 
+    # Starting Python 3.6, the dict maintains order as inserted
+    # When running this on a different computer with older Python,
+    # the sessions_per_date was all jumbled-up.
+    # https://stackoverflow.com/questions/1867861/dictionaries-how-to-keep-keys-values-in-same-order-as-declared
     date_range = pd.date_range(from_date, to_date).date
-
     sessions_per_date = {today: sessions.filter(date=today) for today in date_range}
 
     context = {
@@ -57,11 +60,11 @@ def prepare_report(from_date, to_date, client_id=None, project_id=None):
         'total_earned': get_total_earned(sessions),
     }
 
-    if client_id is not None:
-        context['client'] = Client.objects.get(pk=client_id)
+    if client_ids != []:
+        context['clients'] = Client.objects.filter(pk__in=client_ids)
         
-    if project_id is not None:
-        context['project'] = Project.objects.get(pk=project_id)
+    if project_ids != []:
+        context['projects'] = Project.objects.filter(pk__in=project_ids)
     
     return context
 
@@ -103,11 +106,13 @@ def create_report_form(request):
 def earnings_report(request):
     from_date, to_date = build_from_and_to_date(request)
 
-    # I think these default to None if they're not submitted
-    client_id = request.GET.get('client')
-    project_id = request.GET.get('project')
-    
-    context = prepare_report(from_date, to_date, client_id, project_id)
+    # getlist() returns either [] if the parameter was not submitted,
+    # or a list of string IDs, like ['2', '3'].
+    # /* get() would have returned None or 3, i.e. an int, if submitted */
+    client_ids = request.GET.getlist('client')
+    project_ids = request.GET.getlist('project')
+
+    context = prepare_report(from_date, to_date, client_ids, project_ids)
 
     return render(request, 'reports/report.html', context)
 
