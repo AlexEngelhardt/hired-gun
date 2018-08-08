@@ -258,5 +258,18 @@
         "break_duration": null,
         "description": "Lead a workshop"
     }
+},
+{
+    "model": "projects.session",
+    "pk": 24,
+    "fields": {
+        "project": 10,
+        "date": "2018-07-05",
+        "units_worked": "2.00",
+        "start_time": null,
+        "end_time": null,
+        "break_duration": null,
+        "description": "Mini stuff"
+    }
 }
 ]
