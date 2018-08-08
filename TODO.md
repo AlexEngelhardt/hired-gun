@@ -12,7 +12,6 @@
   - per client (only one client)
   - per project(s) (>= 1 project)
   - Put the 3 forms in 3 URLs, in 3 different places (reports, then reports/client1/ , then reports/rpoject=1?roject=2?project=8)
-- Default fill the forms' month / date range to the last month *that has sessions*. Otherwise demo fixtures expire in a month and are hard to find for curious new users
 
 **Testing**
 
@@ -84,6 +83,7 @@
 
 **Forms**
 
+- Choose ModelForm (`forms.py`) or manual ones (in `views.py`) for reports. Not both.
 - Instead of having multiple forms, you can play with JavaScript (I think AJAX or jQuery are the magic words here), to only show the "project" field after one or more "clients" have been selected. Then you can have just one form that shapeshifts based on what you entered
 
 **Misc/Fun**
