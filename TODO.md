@@ -13,6 +13,19 @@
   - per project(s) (>= 1 project)
   - Put the 3 forms in 3 URLs, in 3 different places (reports, then reports/client1/ , then reports/rpoject=1?roject=2?project=8)
 
+**Authentication**
+
+- read official docs
+- cross-check with DjangoGirls tutorial
+- Find out how to build a demo user who can:
+  - be logged in by multiple people more than once
+  - gets its own clients, sessions, etc. to play around, but after the session is done, this gets destroyed
+	- This is not to restrict usage, but to allow curious people to play around without registering a "proper" account
+    - Alternatively (or, additionally): Allow creation of users where data gets destroyed after 14 days
+  - Or just leave it all open for the beginning
+- Once auth works, you can have a demo user with fixtures, and an Alex user with your actual data => no more 2 sqlite DBs
+
+
 **Testing**
 
 - Start with tests asap. Wait too long and it won't happen :)
@@ -31,18 +44,7 @@
 - Empty 'client' fields still fail. A custom widget may help, which would make the empty choice 'disabled' instead of passing ""
 - The ModelMultipleChoiceField gets passed in the GET url as `&project=1&project=2`. My code currently takes the last project only there; it doesn't check if there's multiple projects submitted.
 
-**Authentication**
 
-- read official docs
-- cross-check with DjangoGirls tutorial
-- Find out how to build a demo user who can:
-  - be logged in by multiple people more than once
-  - gets its own clients, sessions, etc. to play around, but after the session is done, this gets destroyed
-	- This is not to restrict usage, but to allow curious people to play around without registering a "proper" account
-    - Alternatively (or, additionally): Allow creation of users where data gets destroyed after 14 days
-  - Or just leave it all open for the beginning
-- Once auth works, you can have a demo user with fixtures, and an Alex user with your actual data => no more 2 sqlite DBs
-  
 **Add/Edit session form**
 
 - Selecting the project should be hierarchical, by first selecting the client, then the project.
@@ -70,6 +72,10 @@
 
 - How to *fix* sessions for a specific invoice? They should be non-mutable afterwards (or maybe only with a warning!)
 - How to ensure invoice no. uniqueness and continuity?
+
+**Prettier**
+
+- Put Forms in tables at least :)
 
 ### Someday/Maybe
 

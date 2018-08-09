@@ -11,24 +11,6 @@
 
 <form method="GET" action="earnings_report">
   <p>
-    <label for="client">Client</label>
-    <select name="client">
-      <option disabled selected>--- all ---</option>
-      {% for client in clients %}
-        <option value="{{ client.id }}">{{ client.name }}</option>
-      {% endfor %}
-    </select>
-  </p>
-  <p>
-    <label for="project">Project</label>
-    <select name="project">
-      <option disabled selected>--- all ---</option>
-      {% for project in projects %}
-        <option value="{{ project.id }}">{{ project.name }}</option>
-      {% endfor %}
-    </select>
-  </p>
-  <p>
     <label for="year">Year</label>
     <input type="number" name="year" value="{{ year_of_previous_month }}" />
   </p>
@@ -71,6 +53,35 @@
   <p>
     <label for="to">To: </label>
     <input type="date" name="to" value="{{ last_of_prev_month }}" />
+  </p>
+  <p>
+    <input type="submit" value="Get Report" />
+  </p>
+</form>
+
+<hr>
+
+<h3>Get a report per client</h3>
+
+Put this on a client page with client id as input type hidden
+
+<form method="GET" action="earnings_report">
+  <p>
+    <label for="client">Client</label>
+    <select name="client">
+      <option disabled selected>--- all ---</option>
+      {% for client in clients %}
+        <option value="{{ client.id }}">{{ client.name }}</option>
+      {% endfor %}
+    </select>
+  </p>
+  <p>
+    <label for="year">Year</label>
+    <input type="number" name="year" value="{{ year_of_previous_month }}" />
+  </p>
+  <p>
+    <label for="month">Month</label>
+    <input type="number" name="month" value="{{ previous_month }}" />
   </p>
   <p>
     <input type="submit" value="Get Report" />
