@@ -1,7 +1,7 @@
 import datetime
 import pandas as pd
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import F, Sum
 
 from projects.models import Client, Project, Session
@@ -94,12 +94,19 @@ def build_from_and_to_date(request):
 #### Views
 
 
-def create_report_form(request):
+def create_report_form(request, pk=None):
+   
     context = get_initial_values()
     context['projects'] = Project.objects.all()
     context['clients'] = Client.objects.all()
     context['monthly_form'] = ReportMonthlyForm()
     context['custom_form'] = ReportCustomForm()
+
+    if pk is not None:
+        client = get_object_or_404(Client, pk=pk)
+        context['client'] = client
+        context['this_clients_projects'] = Project.objects.filter(client=client)
+    
     return render(request, 'reports/create_report.html', context)
     
 
@@ -115,4 +122,3 @@ def earnings_report(request):
     context = prepare_report(from_date, to_date, client_ids, project_ids)
 
     return render(request, 'reports/report.html', context)
-

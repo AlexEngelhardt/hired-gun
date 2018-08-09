@@ -4,15 +4,6 @@
 
 - also grep this repo for TODO within .py files and migrate them here
 
-**ASAP**
-
-- Understand Python inheritance and class methods etc. for the next step:
-- 3 Forms/Reports:
-  - Simple (all sessions within month/date range)
-  - per client (only one client)
-  - per project(s) (>= 1 project)
-  - Put the 3 forms in 3 URLs, in 3 different places (reports, then reports/client1/ , then reports/rpoject=1?roject=2?project=8)
-
 **Authentication**
 
 - read official docs
@@ -31,6 +22,7 @@
 - Start with tests asap. Wait too long and it won't happen :)
 - Then move to test-driven development
 - Try [PXP](http://alpha-epsilon.de/programming/2017/12/06/personal-extreme-programming/), maybe
+
 
 **Reports**
 
@@ -68,14 +60,18 @@
 - The date in the ModelForms (i.e. on the frontend) should be shown as yyyy-mm-dd
 - What happens if you try to delete a client, but it still has projects and/or sessions attached? (on_delete=PROTECT oder so)
 
+
 **Invoices App**
 
 - How to *fix* sessions for a specific invoice? They should be non-mutable afterwards (or maybe only with a warning!)
 - How to ensure invoice no. uniqueness and continuity?
 
+
 **Prettier**
 
 - Put Forms in tables at least :)
+- Input field width narrower (4 digits year, e.g.)
+- Dropdown menus (you need JavaScript for that)
 
 ### Someday/Maybe
 
@@ -87,10 +83,12 @@
 
 - Can reports.html use a generic list view? What's the advantage in such a (more custom) view?
 
+
 **Forms**
 
 - Choose ModelForm (`forms.py`) or manual ones (in `views.py`) for reports. Not both.
 - Instead of having multiple forms, you can play with JavaScript (I think AJAX or jQuery are the magic words here), to only show the "project" field after one or more "clients" have been selected. Then you can have just one form that shapeshifts based on what you entered
+
 
 **Misc/Fun**
 
