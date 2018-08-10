@@ -11,7 +11,11 @@ def get_initial_values():
 
     try: 
         youngest_session = Session.objects.order_by('date').last()
-        youngest_date_with_sessions = youngest_session.date
+        if youngest_session is not None:
+            youngest_date_with_sessions = youngest_session.date
+        else:
+            # Just use the last calendar month if you have no sessions at all.
+            youngest_date_with_sessions = datetime.date.today().replace(day=1) - datetime.timedelta(days=1)
 
         first_of_that_month = youngest_date_with_sessions.replace(day=1)
         last_of_that_month = (first_of_that_month.replace(day=28) + datetime.timedelta(days=4)).replace(day=1) - datetime.timedelta(days=1)

@@ -4,6 +4,24 @@
 
 <h1>Hello there!</h1>
 
+{% if user.is_authenticated %}
+  <p>
+    Hello {{ user }}! (<a href="accounts/logout/">Logout</a>)
+  </p>
+  {% else %}
+  <p>
+  <form method="POST" action="accounts/login/">
+    {% csrf_token %}
+    <label for="user">User: </label>
+    <input type="text" name="username" />
+    <label for="password">Password: </label>
+    <input type="password" name="password" />
+    <input type="submit" value="Login">
+  </form>
+  </p>
+  
+{% endif %}
+
 <p>You'll first want to add some of your clients, then some projects for them, and finally some work sessions:
 
 <ul>

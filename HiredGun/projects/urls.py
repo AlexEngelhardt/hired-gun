@@ -10,7 +10,6 @@ from . import views
 
 app_name = 'projects'
 
-
 # - The 'name' arguments are for removing hardcoded URLs in your templates:
 # - Add a trailing slash to your paths, only then both ways (with and without slash) work in hrefs
 

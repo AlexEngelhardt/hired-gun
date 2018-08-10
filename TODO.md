@@ -6,8 +6,11 @@
 
 **Authentication**
 
-- read official docs
-- cross-check with DjangoGirls tutorial
+- Connect clients to users
+  - Do I need to connect projects, sessions, etc. too?
+- Show only the logged in user's clients
+- **If you're not logged in, pull fixture session/project/users and use your request.session stuff to store the current setup. This is your demo user**
+  - => Read up on Django's session framework
 - Find out how to build a demo user who can:
   - be logged in by multiple people more than once
   - gets its own clients, sessions, etc. to play around, but after the session is done, this gets destroyed
