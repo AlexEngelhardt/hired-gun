@@ -2,6 +2,7 @@ from django.views import generic
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import ClientForm, ProjectForm, SessionForm
 from .models import Client, Project, Session
@@ -18,7 +19,8 @@ def index(request):
 ################################################################
 #### Clients
 
-class ClientListView(generic.ListView):
+
+class ClientListView(LoginRequiredMixin, generic.ListView):
     # the ListView generic view uses a default template called
     # <app name>/<model name>_list.html; we can use template_name to tell
     # ListView to use some existing "projects/index.html" template, for example.
@@ -27,9 +29,19 @@ class ClientListView(generic.ListView):
     context_object_name = 'clients'  # default is 'object_list'
     model = Client
 
-class ClientDetailView(generic.DetailView):
+    def get_queryset(self):
+        return Client.objects.filter(user=self.request.user)
+
+    
+class ClientDetailView(LoginRequiredMixin, generic.DetailView):
     model = Client
     # template_name = 'projects/client_detail.html'
+    
+    def get_queryset(self):
+        # This method filters out clients that don't belong to the requesting user
+        qs = super().get_queryset().filter(user=self.request.user)
+        return qs
+
     
 def add_client(request):
     if request.method == 'POST':
@@ -43,6 +55,7 @@ def add_client(request):
     else:
         form = ClientForm()
     return render(request, 'projects/client_edit.html', {'form': form})
+
 
 def edit_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
@@ -62,6 +75,7 @@ def edit_client(request, pk):
         form = ClientForm(instance=client)
     return render(request, 'projects/client_edit.html', {'form': form})
 
+
 def delete_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
     client.delete()
@@ -71,13 +85,21 @@ def delete_client(request, pk):
 ################################################################
 #### Projects
 
-class ProjectListView(generic.ListView):
+
+class ProjectListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'projects'
     model = Project
+    def get_queryset(self):
+        return Project.objects.filter(client__user=self.request.user)
 
-class ProjectDetailView(generic.DetailView):
+    
+class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
     model = Project
+    def get_queryset(self):
+        qs = super().get_queryset().filter(client__user=self.request.user)
+        return qs
 
+    
 def add_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -88,6 +110,7 @@ def add_project(request):
     else:
         form = ProjectForm()
     return render(request, 'projects/project_edit.html', {'form': form})
+
 
 def edit_project(request, pk):
     project = get_object_or_404(Project, pk=pk)
@@ -102,6 +125,7 @@ def edit_project(request, pk):
         form = ProjectForm(instance=project)
     return render(request, 'projects/project_edit.html', {'form': form})
 
+
 def delete_project(request, pk):
     project = get_object_or_404(Project, pk=pk)
     project.delete()
@@ -111,12 +135,20 @@ def delete_project(request, pk):
 ################################################################
 #### Sessions
 
-class SessionListView(generic.ListView):
+
+class SessionListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'sessions'
     model = Session
+    def get_queryset(self):
+        return Session.objects.filter(project__client__user=self.request.user)
 
-class SessionDetailView(generic.DetailView):
+    
+class SessionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Session
+    def get_queryset(self):
+        qs = super().get_queryset().filter(project__client__user=self.request.user)
+        return qs
+
 
 def add_session(request):
     if request.method == 'POST':
@@ -128,6 +160,7 @@ def add_session(request):
     else:
         form = SessionForm()
     return render(request, 'projects/session_edit.html', {'form': form})
+
 
 def edit_session(request, pk):
     session = get_object_or_404(Session, pk=pk)
@@ -141,6 +174,7 @@ def edit_session(request, pk):
     else:
         form = SessionForm(instance=session)
     return render(request, 'projects/session_edit.html', {'form': form})
+
 
 def delete_session(request, pk):
     session = get_object_or_404(Session, pk=pk)

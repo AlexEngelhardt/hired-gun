@@ -1,4 +1,4 @@
-{% extends 'projects/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 
@@ -6,20 +6,12 @@
 
 {% if user.is_authenticated %}
   <p>
-    Hello {{ user }}! (<a href="accounts/logout/">Logout</a>)
+    Hello {{ user.get_username }}! (<a href="{% url 'logout' %}">Logout</a>)
   </p>
   {% else %}
   <p>
-  <form method="POST" action="accounts/login/">
-    {% csrf_token %}
-    <label for="user">User: </label>
-    <input type="text" name="username" />
-    <label for="password">Password: </label>
-    <input type="password" name="password" />
-    <input type="submit" value="Login">
-  </form>
+    Please <a href="{% url 'login' %}">login</a>!
   </p>
-  
 {% endif %}
 
 <p>You'll first want to add some of your clients, then some projects for them, and finally some work sessions:

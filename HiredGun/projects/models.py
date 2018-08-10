@@ -2,9 +2,11 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Client(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=256)
     billing_address = models.TextField(null=True, blank=True)
     invoice_email = models.EmailField(max_length=256, null=True, blank=True)

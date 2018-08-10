@@ -21,7 +21,7 @@ class ClientAdmin(admin.ModelAdmin):
     changing the order of how the fields appear in the admin form
     """
     fieldsets = [
-        (None, {'fields': ['name']}),
+        (None, {'fields': ['name', 'user']}),
         ('Payment information', {'fields': ['payment_terms', 'invoice_email', 'billing_address']})
     ]
     inlines = [ProjectInline]
