@@ -6,9 +6,6 @@
 
 **Authentication**
 
-- [X] Show only the logged in user's clients in ListView
-- [ ] Don't allow users to see other users' Detailviews.
-- Update fixtures so that they all belong to test:test
 - **If you're not logged in, pull fixture session/project/users and use your request.session stuff to store the current setup. This is your demo user**
   - => Read up on Django's session framework
 - Find out how to build a demo user who can:

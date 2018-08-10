@@ -1,15 +1,22 @@
 from django import forms
 
+from django.contrib.auth.models import User
+
 from .models import Client, Project, Session
 
 
 class ClientForm(forms.ModelForm):
+
+    user = forms.ModelChoiceField(queryset=User.objects.all(),
+                                  widget=forms.HiddenInput())
+    
     class Meta:
         model = Client
-        
+
         ## Provide one of (fields, exclude):
         # fields = ('name', 'billing_address', 'invoice_email', 'payment_terms',)
         fields = '__all__'
+
 
 
 class ProjectForm(forms.ModelForm):

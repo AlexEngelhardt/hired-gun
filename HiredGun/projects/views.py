@@ -2,7 +2,9 @@ from django.views import generic
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 from .forms import ClientForm, ProjectForm, SessionForm
 from .models import Client, Project, Session
@@ -42,7 +44,8 @@ class ClientDetailView(LoginRequiredMixin, generic.DetailView):
         qs = super().get_queryset().filter(user=self.request.user)
         return qs
 
-    
+
+@login_required    
 def add_client(request):
     if request.method == 'POST':
         form = ClientForm(request.POST)
@@ -53,7 +56,7 @@ def add_client(request):
             client.save()
             return redirect('projects:client-detail', pk=client.pk)
     else:
-        form = ClientForm()
+        form = ClientForm(initial = {'user': request.user.pk})
     return render(request, 'projects/client_edit.html', {'form': form})
 
 
