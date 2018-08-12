@@ -98,4 +98,4 @@
 **Misc/Fun**
 
 - Build some REST(ful?) API in the app, just to find out what exactly that is.
-
+- Lint your project: `python3 -m flake8` from the project root

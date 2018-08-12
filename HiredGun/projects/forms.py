@@ -7,8 +7,10 @@ from .models import Client, Project, Session
 
 class ClientForm(forms.ModelForm):
 
-    user = forms.ModelChoiceField(queryset=User.objects.all(),
-                                  widget=forms.HiddenInput())
+    user = forms.ModelChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.HiddenInput()
+    )
     
     class Meta:
         model = Client
@@ -20,6 +22,12 @@ class ClientForm(forms.ModelForm):
 
 
 class ProjectForm(forms.ModelForm):
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['client'].queryset = Client.objects.filter(user=user)
+    
+    
     class Meta:
         model = Project
         exclude = ('', )  # same as fields = '__all__'

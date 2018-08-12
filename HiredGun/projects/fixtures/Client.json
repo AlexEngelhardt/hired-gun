@@ -3,6 +3,7 @@
     "model": "projects.client",
     "pk": 3,
     "fields": {
+        "user": 2,
         "name": "The Lucrative Main Client Ltd.",
         "billing_address": "Gold Street 123\r\n83838 Gold City",
         "invoice_email": "goldman@example.com",
@@ -13,6 +14,7 @@
     "model": "projects.client",
     "pk": 4,
     "fields": {
+        "user": 2,
         "name": "The \"we need you 4 days per year\" Client, Inc.",
         "billing_address": "Startup Street 4\r\n12345 Berlin",
         "invoice_email": "hello@example.com",
@@ -23,6 +25,7 @@
     "model": "projects.client",
     "pk": 5,
     "fields": {
+        "user": 2,
         "name": "The Stingy Corp GmbH",
         "billing_address": "Cheap street 9\r\n12214 Cheapotown",
         "invoice_email": "stingy@example.com",

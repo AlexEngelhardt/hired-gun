@@ -60,6 +60,7 @@ def add_client(request):
     return render(request, 'projects/client_edit.html', {'form': form})
 
 
+@login_required
 def edit_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
 
@@ -79,6 +80,7 @@ def edit_client(request, pk):
     return render(request, 'projects/client_edit.html', {'form': form})
 
 
+@login_required
 def delete_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
     client.delete()
@@ -102,33 +104,35 @@ class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
         qs = super().get_queryset().filter(client__user=self.request.user)
         return qs
 
-    
+@login_required    
 def add_project(request):
     if request.method == 'POST':
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.user, request.POST)
         if form.is_valid():
             project = form.save(commit=False)
             project.save()
             return redirect('projects:project-detail', pk=project.pk)
     else:
-        form = ProjectForm()
+        form = ProjectForm(request.user)
     return render(request, 'projects/project_edit.html', {'form': form})
 
 
+@login_required    
 def edit_project(request, pk):
     project = get_object_or_404(Project, pk=pk)
 
     if request.method == 'POST':
-        form = ProjectForm(request.POST, instance=project)
+        form = ProjectForm(request.user, request.POST, instance=project)
         if form.is_valid():
             project = form.save(commit=False)
             project.save()
             return redirect('projects:project-detail', pk=project.pk)
     else:
-        form = ProjectForm(instance=project)
+        form = ProjectForm(request.user, instance=project)
     return render(request, 'projects/project_edit.html', {'form': form})
 
 
+@login_required    
 def delete_project(request, pk):
     project = get_object_or_404(Project, pk=pk)
     project.delete()
