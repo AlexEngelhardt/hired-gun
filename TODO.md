@@ -4,10 +4,15 @@
 
 - also grep this repo for TODO within .py files and migrate them here
 
+**Bugs**
+
+- "Add Session": the dropdown menu shows *all* projects/sessions, not just this user's
+
 **Authentication**
 
 - **If you're not logged in, pull fixture session/project/users and use your request.session stuff to store the current setup. This is your demo user**
   - => Read up on Django's session framework
+- **Or, just allow people to sign up without email**
 - Find out how to build a demo user who can:
   - be logged in by multiple people more than once
   - gets its own clients, sessions, etc. to play around, but after the session is done, this gets destroyed
