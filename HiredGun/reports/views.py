@@ -4,6 +4,8 @@ import pandas as pd
 from django.shortcuts import render, get_object_or_404
 from django.db.models import F, Sum
 
+from django.contrib.auth.decorators import login_required
+
 from projects.models import Client, Project, Session
 from .forms import ReportMonthlyForm, ReportCustomForm
 
@@ -24,13 +26,14 @@ def last_day_of_month(any_day):
     return next_month - datetime.timedelta(days=next_month.day)
 
 
-def prepare_report(from_date, to_date, client_ids=[], project_ids=[]):
+def prepare_report(user, from_date, to_date, client_ids=[], project_ids=[]):
     """
     Filters all relevant sessions to create a report.
     Filters a time span with the from and to arguments.
     Optionally filters by client or project
     """
     sessions = Session.objects.filter(
+        project__client__user=user,
         date__gte=from_date,
         date__lte=to_date
     )
@@ -93,12 +96,12 @@ def build_from_and_to_date(request):
 
 #### Views
 
-
+@login_required
 def create_report_form(request, pk=None):
    
     context = get_initial_values(request.user)
-    context['projects'] = Project.objects.all()
-    context['clients'] = Client.objects.all()
+    context['projects'] = Project.objects.filter(client__user=request.user)
+    context['clients'] = Client.objects.filter(user=request.user)
     context['monthly_form'] = ReportMonthlyForm(request.user)
     context['custom_form'] = ReportCustomForm(request.user)
 
@@ -109,7 +112,7 @@ def create_report_form(request, pk=None):
     
     return render(request, 'reports/create_report.html', context)
     
-
+@login_required
 def earnings_report(request):
     from_date, to_date = build_from_and_to_date(request)
 
@@ -119,6 +122,6 @@ def earnings_report(request):
     client_ids = request.GET.getlist('client')
     project_ids = request.GET.getlist('project')
 
-    context = prepare_report(from_date, to_date, client_ids, project_ids)
+    context = prepare_report(request.user, from_date, to_date, client_ids, project_ids)
 
     return render(request, 'reports/report.html', context)
