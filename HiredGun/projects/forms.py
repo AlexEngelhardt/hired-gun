@@ -42,7 +42,11 @@ class ProjectForm(forms.ModelForm):
 
 
 class SessionForm(forms.ModelForm):
-    
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['project'].queryset = Project.objects.filter(client__user=user)
+
     class Meta:
         model = Session
         exclude = ('', )

@@ -159,13 +159,13 @@ class SessionDetailView(LoginRequiredMixin, generic.DetailView):
 
 def add_session(request):
     if request.method == 'POST':
-        form = SessionForm(request.POST)
+        form = SessionForm(request.user, request.POST)
         if form.is_valid():
             session = form.save(commit=False)
             session.save()
             return redirect('projects:session-detail', pk=session.pk)
     else:
-        form = SessionForm()
+        form = SessionForm(request.user)
     return render(request, 'projects/session_edit.html', {'form': form})
 
 
@@ -173,13 +173,13 @@ def edit_session(request, pk):
     session = get_object_or_404(Session, pk=pk)
 
     if request.method == 'POST':
-        form = SessionForm(request.POST, instance=session)
+        form = SessionForm(request.user, request.POST, instance=session)
         if form.is_valid():
             session = form.save(commit=False)
             session.save()
             return redirect('projects:session-detail', pk=session.pk)
     else:
-        form = SessionForm(instance=session)
+        form = SessionForm(request.user, instance=session)
     return render(request, 'projects/session_edit.html', {'form': form})
 
 

@@ -2,7 +2,7 @@ import datetime
 from projects.models import Session
 from django.db.utils import OperationalError
 
-def get_initial_values():
+def get_initial_values(user):
     """
     Gets default values to put into the report forms.
     We check for the most recent ("youngest") session entered, 
@@ -10,7 +10,7 @@ def get_initial_values():
     """
 
     try: 
-        youngest_session = Session.objects.order_by('date').last()
+        youngest_session = Session.objects.filter(project__client__user=user).order_by('date').last()
         if youngest_session is not None:
             youngest_date_with_sessions = youngest_session.date
         else:

@@ -96,11 +96,11 @@ def build_from_and_to_date(request):
 
 def create_report_form(request, pk=None):
    
-    context = get_initial_values()
+    context = get_initial_values(request.user)
     context['projects'] = Project.objects.all()
     context['clients'] = Client.objects.all()
-    context['monthly_form'] = ReportMonthlyForm()
-    context['custom_form'] = ReportCustomForm()
+    context['monthly_form'] = ReportMonthlyForm(request.user)
+    context['custom_form'] = ReportCustomForm(request.user)
 
     if pk is not None:
         client = get_object_or_404(Client, pk=pk)

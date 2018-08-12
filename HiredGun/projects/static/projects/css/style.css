@@ -59,3 +59,7 @@ table.table.table-striped tr.weekend td {
     /* https://stackoverflow.com/questions/25043759/overriding-bootstrap-table-striped-css */
     background-color: #708090;
 }
+
+p {
+    margin-left: 15px;
+}
