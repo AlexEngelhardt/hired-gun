@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>
+  Invoice {{ invoice }}
+  <a class="btn btn-default" href="{% url 'invoices:edit-invoice' pk=invoice.pk %}">
+    <span class="glyphicon glyphicon-pencil"></span>
+  </a>
+  <a class="btn btn-default" href="{% url 'invoices:delete-invoice' pk=invoice.pk %}">
+    <span class="glyphicon glyphicon-trash"></span>
+  </a>
+</h1>
+
+<ul>
+  <li>Client: {{ invoice.client }}</li>
+  <li>Amount: {{ invoice.get_amount }}€</li>
+  <li>Paid: {{ invoice.is_paid }}</li>
+</ul>
+
+{% endblock %}

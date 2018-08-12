@@ -1,11 +1,13 @@
-{% extends 'projects/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 
 <h1>Invoices</h1>
 
-<hr>
+<ul>
+  <li><a href="{% url 'invoices:invoice-list' %}">List invoices</a></li>
+</ul>
 
-Veeeery much TODO
+<hr>
 
 {% endblock %}

@@ -43,7 +43,7 @@ class Project(models.Model):
     
     def __str__(self):
         return self.name
-
+    
     def is_active(self):
         today = datetime.date.today()
         if self.end_date is None:

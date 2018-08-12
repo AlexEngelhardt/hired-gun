@@ -4,12 +4,9 @@
 
 - also grep this repo for TODO within .py files and migrate them here
 
-**Bugs**
-
-- "Add Session": the dropdown menu shows *all* projects/sessions, not just this user's
-
 **Authentication**
 
+- Signup as a demo user: without e-mail required, and sample-data auto-installed.
 - **If you're not logged in, pull fixture session/project/users and use your request.session stuff to store the current setup. This is your demo user**
   - => Read up on Django's session framework
 - **Or, just allow people to sign up without email**
@@ -19,7 +16,6 @@
 	- This is not to restrict usage, but to allow curious people to play around without registering a "proper" account
     - Alternatively (or, additionally): Allow creation of users where data gets destroyed after 14 days
   - Or just leave it all open for the beginning
-- Once auth works, you can have a demo user with fixtures, and an Alex user with your actual data => no more 2 sqlite DBs
 
 
 **Testing**
@@ -33,14 +29,14 @@
 
 - Output reports as PDF
   - Either with a Latex engine, or markdown/pandoc, or that python module `reportlab`
-  - Emergency solution: A HTML popup that's then printable
-
-
-**Reports forms.Forms**
-
-- Empty 'client' fields still fail. A custom widget may help, which would make the empty choice 'disabled' instead of passing ""
-- The ModelMultipleChoiceField gets passed in the GET url as `&project=1&project=2`. My code currently takes the last project only there; it doesn't check if there's multiple projects submitted.
-
+  - Emergency solution: An HTML popup that's then printable
+- Cashflow (i.e. money in bank, instead of money worked): Use the invoices' `paid_date` attribute instead of session dates
+- Yearly overview
+  - A table with columns year, month, $ worked, cashflow in, YTD $ worked
+  - Maybe include a matplotlib/seaborn plot on that page?
+- List unpaid invoices
+- List overdue invoices
+  
 
 **Add/Edit session form**
 
@@ -69,7 +65,10 @@
 **Invoices App**
 
 - How to *fix* sessions for a specific invoice? They should be non-mutable afterwards (or maybe only with a warning!)
+  - Either add attribute 'invoiced' to a session, or with an m:n table of invoices:sessions
 - How to ensure invoice no. uniqueness and continuity?
+- Build the `compute_due_date()` method
+- Build the `generate_invoice_number()` method
 
 
 **Prettier**
