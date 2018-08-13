@@ -3,8 +3,8 @@
 {% block content %}
 
 <h1>
-  Invoice {{ invoice }}
-  <a class="btn btn-default" href="{% url 'invoices:edit-invoice' pk=invoice.pk %}">
+  Invoice {{ invoice }} (PK: {{ invoice.pk }})
+  <a class="btn btn-default" href="{% url 'invoices:edit-invoice' invoice_pk=invoice.pk %}">
     <span class="glyphicon glyphicon-pencil"></span>
   </a>
   <a class="btn btn-default" href="{% url 'invoices:delete-invoice' pk=invoice.pk %}">
@@ -17,5 +17,16 @@
   <li>Amount: {{ invoice.get_amount }}€</li>
   <li>Paid: {{ invoice.is_paid }}</li>
 </ul>
+
+{% if projects %}
+<h3>Invoice is bound to these projects</h3>
+<ul>
+  {% for project in projects %}
+  <li><a href="{% url 'projects:project-detail' project.pk %}">{{ project }}</a></li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No explicit projects associated.</p>
+{% endif %}
 
 {% endblock %}

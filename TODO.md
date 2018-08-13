@@ -28,8 +28,8 @@
 **Reports**
 
 - Output reports as PDF
-  - Either with a Latex engine, or markdown/pandoc, or that python module `reportlab`
-  - Emergency solution: An HTML popup that's then printable
+  - Use 'django-wkhtmltopdf' instead of reportlab, you can create and transform an invoice HTML easily instead of having to draw the whole PDF by hand
+  - i.e., start with a HTML invoice
 - Cashflow (i.e. money in bank, instead of money worked): Use the invoices' `paid_date` attribute instead of session dates
 - Yearly overview
   - A table with columns year, month, $ worked, cashflow in, YTD $ worked
@@ -68,7 +68,8 @@
 - How to ensure invoice no. uniqueness and continuity?
 - Build the `compute_due_date()` method
 - Build the `generate_invoice_number()` method
-
+- Don't store the client ID in an invoice. Instead, put get_client() method in the invoice model
+  - => you have to build a custom model validator for an invoice: all its assigned projects must belong to the same client
 
 **Prettier**
 
@@ -90,6 +91,7 @@
 **Forms**
 
 - Choose ModelForm (`forms.py`) or manual ones (in `views.py`) for reports. Not both.
+  - And by that I mean: switch to ModelForms
 - Instead of having multiple forms, you can play with JavaScript (I think AJAX or jQuery are the magic words here), to only show the "project" field after one or more "clients" have been selected. Then you can have just one form that shapeshifts based on what you entered
 - The Password reset email doesn't work because Django can't send emails yet.
 - Use django-datetimepicker for all forms' date fields 

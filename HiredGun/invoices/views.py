@@ -6,11 +6,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Invoice
 from .forms import InvoiceForm
+from projects.models import Client, Project
 
 # Create your views here.
 
+@login_required
 def index(request):
-    context = {}
+    clients = Client.objects.filter(user=request.user)
+    context = {'clients': clients}
     return render(request, 'invoices/index.html', context)
 
 
@@ -30,27 +33,35 @@ class InvoiceDetailView(LoginRequiredMixin, generic.DetailView):
         qs = qs.filter(client__user=self.request.user)
         return qs
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['projects'] = context['invoice'].project.all()
+        return context
 
-@login_required    
-def add_invoice(request):
+    
+@login_required
+def add_invoice(request, client_pk):
+
     if request.method == 'POST':
-        form = InvoiceForm(request.user, request.POST)
+        form = InvoiceForm(request.user, client_pk, request.POST)
         if form.is_valid():
             invoice = form.save(commit=False)
             invoice.save()
             return redirect('invoices:invoice-detail', pk=invoice.pk)
     else:
-        form = InvoiceForm(request.user)
+        form = InvoiceForm(request.user, client_pk)
     return render(request, 'invoices/invoice_edit.html', {'form': form})
 
 
 @login_required
-def edit_invoice(request, pk):
-    invoice = get_object_or_404(Invoice, pk=pk)
+def edit_invoice(request, invoice_pk):
 
+    invoice = get_object_or_404(Invoice, pk=invoice_pk)
+    client_pk = invoice.client.pk
+    
     # If the user already edited and is redirected here:
     if request.method == 'POST':
-        form = InvoiceForm(request.user, request.POST, instance=invoice)
+        form = InvoiceForm(request.user, client_pk, request.POST, instance=invoice)
         if form.is_valid():
             invoice = form.save(commit=False)
             # Here you could compute fields the user did not provide by hand,
@@ -60,7 +71,7 @@ def edit_invoice(request, pk):
 
     # If he just clicked the edit button and will start now:
     else:
-        form = InvoiceForm(request.user, instance=invoice)
+        form = InvoiceForm(request.user, client_pk, instance=invoice)
     return render(request, 'invoices/invoice_edit.html', {'form': form})
 
 

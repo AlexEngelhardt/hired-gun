@@ -4,14 +4,13 @@
 
 <h1>Your invoices</h1>
 
-<p><a class="btn btn-default" href="{% url 'invoices:add-invoice' %}"><span class="glyphicon glyphicon-plus"></span> Add invoice</a></p>
-
 {% if invoices %}
 
 <table class="table">
   <thead>
     <tr>
       <th scope="col">Invoice</th>
+      <th scope="col">PK (debug)</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -19,6 +18,9 @@
   <tr>
     <td>
       <a href="{% url 'invoices:invoice-detail' invoice.pk %}">{{ invoice }}</a>
+    </td>
+    <td>
+      {{ invoice.pk }}
     </td>
     <td>
       <a href="{% url 'invoices:edit-invoice' invoice.id %}"><span class="glyphicon glyphicon-pencil"></span></a>

@@ -8,6 +8,14 @@
   <li><a href="{% url 'invoices:invoice-list' %}">List invoices</a></li>
 </ul>
 
+<h3>Add invoice</h3>
+
+<ul>
+  {% for client in clients %}
+    <li><a href="{% url 'invoices:add-invoice' client.pk %}">{{ client }}</a></li>
+  {% endfor %}
+</ul>
+
 <hr>
 
 {% endblock %}

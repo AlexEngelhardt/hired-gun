@@ -51,12 +51,13 @@ def add_client(request):
         form = ClientForm(request.POST)
         if form.is_valid():
             client = form.save(commit=False)
-            # Here you could compute fields the user did not provide by hand,
+            # Here you could compute/add fields the user did not provide by hand,
             # e.g. a Session duration, or a 'last edited' timestamp
+            client.user = request.user
             client.save()
             return redirect('projects:client-detail', pk=client.pk)
     else:
-        form = ClientForm(initial = {'user': request.user.pk})
+        form = ClientForm()
     return render(request, 'projects/client_edit.html', {'form': form})
 
 
