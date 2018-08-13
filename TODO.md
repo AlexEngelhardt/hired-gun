@@ -48,7 +48,6 @@
   - Problem: This depends on the client. 
   - Maybe refactor UI so that you have to add a session from a project detail view (or as a button in the project list view)?
   - Or that AJAX/jQuery thing
-- When editing, the 'date' field is not populated with the existing date. Maybe because the format in the HTML form is `mm/dd/yyyy` when it should be `yyyy-mm-dd`?
 
 
 **General**
@@ -93,6 +92,7 @@
 - Choose ModelForm (`forms.py`) or manual ones (in `views.py`) for reports. Not both.
 - Instead of having multiple forms, you can play with JavaScript (I think AJAX or jQuery are the magic words here), to only show the "project" field after one or more "clients" have been selected. Then you can have just one form that shapeshifts based on what you entered
 - The Password reset email doesn't work because Django can't send emails yet.
+- Use django-datetimepicker for all forms' date fields 
 
 **Misc/Fun**
 

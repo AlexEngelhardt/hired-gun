@@ -33,9 +33,11 @@ class ProjectForm(forms.ModelForm):
         exclude = ('', )  # same as fields = '__all__'
         widgets = {
             'start_date': forms.DateInput(
+                format="%Y-%m-%d",
                 attrs={'type': 'date'}
             ),
             'end_date': forms.DateInput(
+                format="%Y-%m-%d",
                 attrs={'type': 'date'}
             )
         }
@@ -52,6 +54,7 @@ class SessionForm(forms.ModelForm):
         exclude = ('', )
         widgets = {
             'date': forms.DateInput(
+                format="%Y-%m-%d",
                 attrs={'type': 'date'}
             )
         }

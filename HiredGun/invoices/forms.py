@@ -7,8 +7,20 @@ class InvoiceForm(forms.ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['client'].queryset = Client.objects.filter(user=user)
-        self.fields['project'].queryset = Project.objects.filter(client__user=user)
+
+        # TODO this very wrong
+        
+        client = forms.ModelChoiceField(
+            queryset=Client.objects.filter(user=user),
+            required=False,
+            help_text='Leave empty to select all clients'
+        )
+
+        project = forms.ModelMultipleChoiceField(
+            queryset = Project.objects.filter(client__user=user),
+            required=False,
+            help_text='Leave empty to select all projects'
+        )
     
     class Meta:
         model = Invoice

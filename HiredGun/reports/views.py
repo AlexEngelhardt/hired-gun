@@ -7,7 +7,6 @@ from django.db.models import F, Sum
 from django.contrib.auth.decorators import login_required
 
 from projects.models import Client, Project, Session
-from .forms import ReportMonthlyForm, ReportCustomForm
 
 # I must store this function externally to avoid circular dependencies
 # (ImportError: cannot import name 'get_initial_values').
@@ -102,8 +101,6 @@ def create_report_form(request, pk=None):
     context = get_initial_values(request.user)
     context['projects'] = Project.objects.filter(client__user=request.user)
     context['clients'] = Client.objects.filter(user=request.user)
-    context['monthly_form'] = ReportMonthlyForm(request.user)
-    context['custom_form'] = ReportCustomForm(request.user)
 
     if pk is not None:
         client = get_object_or_404(Client, pk=pk)
