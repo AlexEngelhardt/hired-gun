@@ -93,7 +93,8 @@ def build_from_and_to_date(request):
     return [ from_date, to_date ]
 
 
-#### Views
+#### (non-generic) Views
+## Although you could use a django.views.generitc.edit.FormView for them, too.
 
 @login_required
 def create_report_form(request, pk=None):

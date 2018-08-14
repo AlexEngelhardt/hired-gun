@@ -11,6 +11,6 @@ urlpatterns = [
 
     path('invoice/add/<int:client_pk>/', views.add_invoice, name='add-invoice'),
     
-    path('invoice/<int:invoice_pk>/edit', views.edit_invoice, name='edit-invoice'),
-    path('invoice/<int:pk>/delete', views.delete_invoice, name='delete-invoice'),
+    path('invoice/<int:pk>/edit', views.InvoiceUpdateView.as_view(), name='edit-invoice'),
+    path('invoice/<int:pk>/delete', views.InvoiceDeleteView.as_view(), name='delete-invoice'),
 ]
