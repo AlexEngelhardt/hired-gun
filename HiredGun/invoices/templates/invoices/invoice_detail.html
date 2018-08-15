@@ -3,11 +3,11 @@
 {% block content %}
 
 <h1>
-  Invoice {{ invoice }} (PK: {{ invoice.pk }})
-  <a class="btn btn-default" href="{% url 'invoices:edit-invoice' invoice_pk=invoice.pk %}">
+  Invoice {{ invoice }}
+  <a class="btn btn-default" href="{% url 'invoices:edit-invoice' invoice.pk %}">
     <span class="glyphicon glyphicon-pencil"></span>
   </a>
-  <a class="btn btn-default" href="{% url 'invoices:delete-invoice' pk=invoice.pk %}">
+  <a class="btn btn-default" href="{% url 'invoices:delete-invoice' invoice.pk %}">
     <span class="glyphicon glyphicon-trash"></span>
   </a>
 </h1>
@@ -26,7 +26,18 @@
   {% endfor %}
 </ul>
 {% else %}
-<p>No explicit projects associated.</p>
+<p>No explicit projects associated (i.e. I'm using all available ones).</p>
+{% endif %}
+
+{% if invoice.get_attached_sessions %}
+<h3>These sessions are contained</h3>
+<ul>
+  {% for session in invoice.get_attached_sessions %}
+  <li>{{ session }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No sessions are contained by this invoice</p>
 {% endif %}
 
 {% endblock %}

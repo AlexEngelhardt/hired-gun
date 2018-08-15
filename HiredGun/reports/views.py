@@ -11,13 +11,9 @@ from projects.models import Client, Project, Session
 # I must store this function externally to avoid circular dependencies
 # (ImportError: cannot import name 'get_initial_values').
 # Otherwise, views.py would import .forms, and forms.py would import a fct from views.py
-from .helpers import get_initial_values
+from .helpers import get_initial_values, get_total_earned
 
 #### Helper functions
-
-
-def get_total_earned(sessions):
-    return sessions.aggregate(cash = Sum(F('units_worked') * F('project__rate')))['cash']
 
 
 def last_day_of_month(any_day):

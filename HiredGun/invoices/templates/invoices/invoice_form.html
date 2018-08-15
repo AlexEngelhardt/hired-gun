@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>Add/Edit Invoice {{ invoice }}</h1>
+<h1>Add/Edit Invoice {{ invoice }} for client {{ client }}</h1>
 
 <form method="POST" class="post-form">
   {% csrf_token %}

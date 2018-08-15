@@ -23,9 +23,9 @@ urlpatterns = [
     path('clients/', views.ClientListView.as_view(), name='clients'),
     path('client/<int:pk>/', views.ClientDetailView.as_view(), name='client-detail'),
     
-    path('clients/add', views.add_client, name='add-client'),
-    path('clients/<int:pk>/edit', views.edit_client, name='edit-client'),
-    path('clients/<int:pk>/delete', views.delete_client, name='delete-client'),
+    path('clients/add', views.ClientCreateView.as_view(), name='add-client'),
+    path('clients/<int:pk>/edit', views.ClientUpdateView.as_view(), name='edit-client'),
+    path('clients/<int:pk>/delete', views.ClientDeleteView.as_view(), name='delete-client'),
 
     
     ## Projects
@@ -33,9 +33,9 @@ urlpatterns = [
     path('projects/', views.ProjectListView.as_view(), name='projects'),
     path('project/<int:pk>/', views.ProjectDetailView.as_view(), name='project-detail'),
     
-    path('project/add', views.add_project, name='add-project'),
-    path('project/<int:pk>/edit', views.edit_project, name='edit-project'),
-    path('project/<int:pk>/delete', views.delete_project, name='delete-project'),
+    path('project/add', views.ProjectCreateView.as_view(), name='add-project'),
+    path('project/<int:pk>/edit', views.ProjectUpdateView.as_view(), name='edit-project'),
+    path('project/<int:pk>/delete', views.ProjectDeleteView.as_view(), name='delete-project'),
 
     
     ## Sessions
@@ -43,8 +43,8 @@ urlpatterns = [
     path('sessions/', views.SessionListView.as_view(), name='sessions'),
     path('session/<int:pk>/', views.SessionDetailView.as_view(), name='session-detail'),
 
-    path('session/add', views.add_session, name='add-session'),
-    path('session/<int:pk>/edit', views.edit_session, name='edit-session'),
-    path('session/<int:pk>/delete', views.delete_session, name='delete-session'),
+    path('session/add', views.SessionCreateView.as_view(), name='add-session'),
+    path('session/<int:pk>/edit', views.SessionUpdateView.as_view(), name='edit-session'),
+    path('session/<int:pk>/delete', views.SessionDeleteView.as_view(), name='delete-session'),
 
 ]

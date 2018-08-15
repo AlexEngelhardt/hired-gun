@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 from .models import Client, Project, Session
 
-
 class ClientForm(forms.ModelForm):
 
     class Meta:
@@ -14,7 +13,6 @@ class ClientForm(forms.ModelForm):
         # fields = ('name', 'billing_address', 'invoice_email', 'payment_terms',)
         # fields = '__all__'
         exclude = ['user']
-
 
 
 class ProjectForm(forms.ModelForm):

@@ -4,6 +4,14 @@
 
 - also grep this repo for TODO within .py files and migrate them here
 
+**ASAP**
+
+- Add client form:
+  - Hide the 'user' field, pre-set it with the logged in user
+- Add project form:
+  - Doesn't subset clients to those of the logged in user anymore
+  
+
 **Authentication**
 
 - Signup as a demo user: without e-mail required, and sample-data auto-installed.
@@ -70,6 +78,7 @@
 - Build the `generate_invoice_number()` method
 - Don't store the client ID in an invoice. Instead, put get_client() method in the invoice model
   - => you have to build a custom model validator for an invoice: all its assigned projects must belong to the same client
+- In "add invoice", the form's client field is not really readonly, I can change it. The "disabled" attribute doesn't submit the client - what do? Keep it empty and add the client in Python instead?
 
 **Prettier**
 
@@ -82,6 +91,9 @@
 - Use [django-tables2](https://django-tables2.readthedocs.io/en/latest/) instead of manually written HTML tables. They are also sortable by column
 - Multiple currencies besides €
 
+**Invoices**
+
+- I should make sure that a Session can only be billed in *one* Invoice. How? An extra table 'session_invoice' where constraint PK=(session, invoice)?
 
 **Reports**
 
@@ -100,3 +112,5 @@
 
 - Build some REST(ful?) API in the app, just to find out what exactly that is.
 - Lint your project: `python3 -m flake8` from the project root
+- Build a FormMixin and consolidate e.g. ClientCreateView and ClientUpdateView
+  - See `ProductFormMixin` in GSA/product/views.py

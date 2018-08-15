@@ -22,8 +22,7 @@ class InvoiceListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'invoices'
     model = Invoice
     def get_queryset(self):
-        # TODO still not user subsetted :D
-        return Invoice.objects.all()
+        return Invoice.objects.filter(client__user=self.request.user)
 
     
 class InvoiceDetailView(LoginRequiredMixin, generic.DetailView):
@@ -39,26 +38,41 @@ class InvoiceDetailView(LoginRequiredMixin, generic.DetailView):
         context['projects'] = context['invoice'].project.all()
         return context
 
-   
-@login_required
-def add_invoice(request, client_pk):
 
-    if request.method == 'POST':
-        form = InvoiceForm(request.user, client_pk, request.POST)
-        if form.is_valid():
-            invoice = form.save(commit=False)
-            invoice.save()
-            return redirect('invoices:invoice-detail', pk=invoice.pk)
-    else:
-        form = InvoiceForm(request.user, client_pk)
-    return render(request, 'invoices/invoice_form.html', {'form': form})
+class InvoiceCreateView(LoginRequiredMixin, generic.edit.CreateView):
+    model = Invoice
+    form_class = InvoiceForm
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()  # this gets e.g. the POST data if you just created an invoice!
+        kwargs['user'] = self.request.user
+        kwargs['client_pk'] = self.kwargs['client_pk']
+        return kwargs
 
-
+    def get_success_url(self):
+        return reverse_lazy('invoices:invoice-detail', args=[self.object.id])
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['client'] = Client.objects.get(id=self.kwargs['client_pk'])
+        return context
+    
 class InvoiceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     model = Invoice
-    fields = '__all__'
+    form_class = InvoiceForm
     success_url = reverse_lazy('invoices:invoice-list')
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        kwargs['client_pk'] = self.object.client.pk
+        return kwargs
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['client'] = Client.objects.get(id=self.object.client.pk)
+        return context
+        
 
 class InvoiceDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Invoice

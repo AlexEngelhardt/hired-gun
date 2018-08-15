@@ -2,6 +2,13 @@ import datetime
 from projects.models import Session
 from django.db.utils import OperationalError
 
+from django.db.models import F, Sum
+
+
+def get_total_earned(sessions):
+    return sessions.aggregate(cash = Sum(F('units_worked') * F('project__rate')))['cash']
+
+
 def get_initial_values(user):
     """
     Gets default values to put into the report forms.

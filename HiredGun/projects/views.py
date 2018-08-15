@@ -1,6 +1,6 @@
 from django.views import generic
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -44,49 +44,22 @@ class ClientDetailView(LoginRequiredMixin, generic.DetailView):
         qs = super().get_queryset().filter(user=self.request.user)
         return qs
 
+class ClientCreateView(LoginRequiredMixin, generic.edit.CreateView):
+    model = Client
+    form = ClientForm
+    fields = '__all__'
+    success_url = reverse_lazy('projects:clients')
 
-@login_required    
-def add_client(request):
-    if request.method == 'POST':
-        form = ClientForm(request.POST)
-        if form.is_valid():
-            client = form.save(commit=False)
-            # Here you could compute/add fields the user did not provide by hand,
-            # e.g. a Session duration, or a 'last edited' timestamp
-            client.user = request.user
-            client.save()
-            return redirect('projects:client-detail', pk=client.pk)
-    else:
-        form = ClientForm()
-    return render(request, 'projects/client_edit.html', {'form': form})
-
-
-@login_required
-def edit_client(request, pk):
-    client = get_object_or_404(Client, pk=pk)
-
-    # If the user already edited and is redirected here:
-    if request.method == 'POST':
-        form = ClientForm(request.POST, instance=client)
-        if form.is_valid():
-            client = form.save(commit=False)
-            # Here you could compute fields the user did not provide by hand,
-            # e.g. a Session duration, or a 'last edited' timestamp
-            client.save()
-            return redirect('projects:client-detail', pk=client.pk)
-
-    # If he just clicked the edit button and will start now:
-    else:
-        form = ClientForm(instance=client)
-    return render(request, 'projects/client_edit.html', {'form': form})
-
-
-@login_required
-def delete_client(request, pk):
-    client = get_object_or_404(Client, pk=pk)
-    client.delete()
-    return redirect('projects:clients')
-
+class ClientUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
+    model = Client
+    form = ClientForm
+    fields = '__all__'
+    success_url = reverse_lazy('projects:clients')
+    
+class ClientDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Client
+    success_url = reverse_lazy('projects:clients')
+    
 
 ################################################################
 #### Projects
@@ -105,39 +78,21 @@ class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
         qs = super().get_queryset().filter(client__user=self.request.user)
         return qs
 
-@login_required    
-def add_project(request):
-    if request.method == 'POST':
-        form = ProjectForm(request.user, request.POST)
-        if form.is_valid():
-            project = form.save(commit=False)
-            project.save()
-            return redirect('projects:project-detail', pk=project.pk)
-    else:
-        form = ProjectForm(request.user)
-    return render(request, 'projects/project_edit.html', {'form': form})
+class ProjectCreateView(LoginRequiredMixin, generic.edit.CreateView):
+    model = Project
+    form = ProjectForm
+    fields = '__all__'
+    success_url = reverse_lazy('projects:projects')
 
-
-@login_required    
-def edit_project(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-
-    if request.method == 'POST':
-        form = ProjectForm(request.user, request.POST, instance=project)
-        if form.is_valid():
-            project = form.save(commit=False)
-            project.save()
-            return redirect('projects:project-detail', pk=project.pk)
-    else:
-        form = ProjectForm(request.user, instance=project)
-    return render(request, 'projects/project_edit.html', {'form': form})
-
-
-@login_required    
-def delete_project(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    project.delete()
-    return redirect('projects:projects')
+class ProjectUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
+    model = Project
+    form = ProjectForm
+    fields = '__all__'
+    success_url = reverse_lazy('projects:projects')
+    
+class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Project
+    success_url = reverse_lazy('projects:projects')
 
 
 ################################################################
@@ -158,33 +113,20 @@ class SessionDetailView(LoginRequiredMixin, generic.DetailView):
         return qs
 
 
-def add_session(request):
-    if request.method == 'POST':
-        form = SessionForm(request.user, request.POST)
-        if form.is_valid():
-            session = form.save(commit=False)
-            session.save()
-            return redirect('projects:session-detail', pk=session.pk)
-    else:
-        form = SessionForm(request.user)
-    return render(request, 'projects/session_edit.html', {'form': form})
+class SessionCreateView(LoginRequiredMixin, generic.edit.CreateView):
+    model = Session
+    form = SessionForm
+    fields = '__all__'
+    success_url = reverse_lazy('projects:sessions')
 
 
-def edit_session(request, pk):
-    session = get_object_or_404(Session, pk=pk)
+class SessionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
+    model = Session
+    form = SessionForm
+    fields = '__all__'
+    success_url = reverse_lazy('projects:session-list')
+    
+class SessionDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Session
+    success_url = reverse_lazy('projects:sessions')
 
-    if request.method == 'POST':
-        form = SessionForm(request.user, request.POST, instance=session)
-        if form.is_valid():
-            session = form.save(commit=False)
-            session.save()
-            return redirect('projects:session-detail', pk=session.pk)
-    else:
-        form = SessionForm(request.user, instance=session)
-    return render(request, 'projects/session_edit.html', {'form': form})
-
-
-def delete_session(request, pk):
-    session = get_object_or_404(Session, pk=pk)
-    session.delete()
-    return redirect('projects:sessions')
