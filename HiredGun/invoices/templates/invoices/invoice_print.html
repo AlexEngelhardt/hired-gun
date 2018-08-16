@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="pull-right">
+  {{ user.profile }}<br />
+  {{ user.profile.address | linebreaksbr }}
+  <br />
+  <br />
+  Telefon: {{ user.profile.phone }}<br />
+  {{ user.email }}<br />
+  {{ user.profile.website }}
+</div>
+
+<div style="margin-bottom: 3cm;"></div>
+
+{{ invoice.client.billing_address | linebreaks }}
+
+<div style="margin-bottom: 1cm;"></div>
+
+<div class="pull-right">
+  <p>
+    <small>Datum</small><br />
+    {{ invoice.invoice_date }}
+  </p>
+</div>
+<p>
+  <small>Rechnungsnummer</small><br />
+  {{ invoice.invoice_no }}
+</p>
+
+<div style="margin-bottom: 1cm;"></div>
+
+<p><strong>Rechnung</strong></p>
+
+<div style="margin-bottom: 1cm;"></div>
+
+<p>Sehr geehrte Damen und Herren,</p>
+
+<p>für die Erledigung der von Ihnen beauftragten Tätigkeiten berechne ich Ihnen wie folgt:</p>
+
+
+<table class="table table-bordered table-striped">
+  <tr>
+    <th>Pos.</th>
+    <th>units</th>
+    <th>Preis pro unit</th>
+    <th>Betrag</th>
+  </tr>
+  {% for project in projects %}
+  <tr>
+    <td>{{ project }}</td>
+    <td>{{ project.units_worked }}</td>
+    <td>{{ project.rate }} / {{ project.rate_unit }}</td>
+    <td>{{ project.amount }}</td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td>Summe netto</td>
+    <td></td>
+    <td></td>
+    <td>{{ invoice.get_amount | floatformat:"2" }}</td>
+  </tr>
+  <tr>
+    <td>zzgl. 19% USt</td>
+    <td></td>
+    <td></td>
+    <td>{{ invoice.get_tax | floatformat:"2" }}</td>
+  </tr>
+  <tr>
+    <td>Rechnungsendbetrag</td>
+    <td></td>
+    <td></td>
+    <td>{{ invoice.get_gross_total | floatformat:"2" }}</td>
+  </tr>
+</table>
+
+<p>Leistungszeitraum: {{ invoice.from_date }} &ndash; {{ invoice.to_date }}</p>
+
+<p>Vielen Dank für Ihren Auftrag!</p>
+
+<p>Ich bitte um Überweisung des offenen Betrags bis zum {{ invoice.due_date }} an die unten genannte Bankverbindung.</p>
+
+<p>Mit freundlichen Grüßen,</p>
+
+<div style="margin-bottom: 1cm;"></div>
+
+<p>{{ user.profile }}</p>
+
+<div style="margin-bottom: 1cm;"></div>
+
+<small>
+  <table class="table">
+    <tr>
+      <td>
+	{{ user.profile }}<br />
+	{{ user.profile.address | linebreaksbr }}
+      </td>
+      <td>
+      Kontonr.: {{ user.profile.bank_acct }}<br />
+      BLZ: {{ user.profile.bank_sort_code }}<br />
+      PayPal: {{ user.profile.paypal }}
+      </td>
+      <td>
+      IBAN: {{ user.profile.IBAN }}<br />
+      BIC: {{ user.profile.BIC }}<br />
+      USt-ID: {{ user.profile.tax_id }}
+      </td>
+    </tr>
+  </table>
+</small>
+
+{% endblock %}
