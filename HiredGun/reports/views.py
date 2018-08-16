@@ -2,7 +2,6 @@ import datetime
 import pandas as pd
 
 from django.shortcuts import render, get_object_or_404
-from django.db.models import F, Sum
 
 from django.contrib.auth.decorators import login_required
 

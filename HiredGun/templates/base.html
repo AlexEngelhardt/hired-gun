@@ -23,8 +23,9 @@
     <div>
       {% if user.is_authenticated %}
       <p>
-	Hello {{ user.get_username }}! (<a href="{% url 'logout' %}">Logout</a>)
+	Hello {{ user.get_username }}! (<a href="{% url 'logout' %}">Logout</a>) (<a href="{% url 'profiles:edit-profile' %}">Edit profile</a>)
       </p>
+      
       {% else %}
       <p>
 	<form class="inline" method="post" action="{% url 'login' %}">

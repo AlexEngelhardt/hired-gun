@@ -6,7 +6,9 @@ from django.db.models import F, Sum
 
 
 def get_total_earned(sessions):
-    return sessions.aggregate(cash = Sum(F('units_worked') * F('project__rate')))['cash']
+    total_earned = sessions.aggregate(cash = Sum(F('units_worked') * F('project__rate')))['cash']
+    # total_earned is a Decimal.decimal now, not a float yet!
+    return float(total_earned)
 
 
 def get_initial_values(user):

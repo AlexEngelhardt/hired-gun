@@ -35,10 +35,16 @@ class InvoiceDetailView(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['projects'] = context['invoice'].project.all()
+        
+        # context['projects'] = context['invoice'].project.all()
+        context['projects'] = self.object.get_implicit_projects()
+        
         return context
 
+class InvoicePrintView(InvoiceDetailView):
+    template_name = 'invoices/invoice_print.html'
 
+    
 class InvoiceCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = Invoice
     form_class = InvoiceForm

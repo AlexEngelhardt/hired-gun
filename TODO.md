@@ -6,11 +6,14 @@
 
 **ASAP**
 
+- Better reports:
+  - YTD earned. With graphs.
+  - Separate Cashflow from earned. I.e., sessions from invoice_paids
 - Add client form:
   - Hide the 'user' field, pre-set it with the logged in user
 - Add project form:
   - Doesn't subset clients to those of the logged in user anymore
-  
+- Get all sessions that are not yet invoiced 
 
 **Authentication**
 
@@ -74,8 +77,7 @@
 - How to *fix* sessions for a specific invoice? They should be non-mutable afterwards (or maybe only with a warning!)
   - Either add attribute 'invoiced' to a session, or with an m:n table of invoices:sessions
 - How to ensure invoice no. uniqueness and continuity?
-- Build the `compute_due_date()` method
-- Build the `generate_invoice_number()` method
+- Make a css with e.g. div class="A4invoice". It should span 21*29cm and have classes for the address, the footer, etc. 
 - Don't store the client ID in an invoice. Instead, put get_client() method in the invoice model
   - => you have to build a custom model validator for an invoice: all its assigned projects must belong to the same client
 - In "add invoice", the form's client field is not really readonly, I can change it. The "disabled" attribute doesn't submit the client - what do? Keep it empty and add the client in Python instead?
@@ -94,6 +96,7 @@
 **Invoices**
 
 - I should make sure that a Session can only be billed in *one* Invoice. How? An extra table 'session_invoice' where constraint PK=(session, invoice)?
+  - Or: Validate on storing an invoice that the timespan and project list don't overlap with some other invoice
 
 **Reports**
 
@@ -114,3 +117,4 @@
 - Lint your project: `python3 -m flake8` from the project root
 - Build a FormMixin and consolidate e.g. ClientCreateView and ClientUpdateView
   - See `ProductFormMixin` in GSA/product/views.py
+- Payment terms: 2% 10 Net 30, COD, and PIA don't yet work in the invoice app: You need to set a due date

@@ -10,6 +10,9 @@
   <a class="btn btn-default" href="{% url 'invoices:delete-invoice' invoice.pk %}">
     <span class="glyphicon glyphicon-trash"></span>
   </a>
+  <a class="btn btn-default" href="{% url 'invoices:invoice-print' invoice.pk %}">
+    <span class="glyphicon glyphicon-print"></span>
+  </a>
 </h1>
 
 <ul>
@@ -22,7 +25,7 @@
 <h3>Invoice is bound to these projects</h3>
 <ul>
   {% for project in projects %}
-  <li><a href="{% url 'projects:project-detail' project.pk %}">{{ project }}</a></li>
+  <li><a href="{% url 'projects:project-detail' project.id %}">{{ project }}</a></li>
   {% endfor %}
 </ul>
 {% else %}

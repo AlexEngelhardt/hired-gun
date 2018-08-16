@@ -11,8 +11,8 @@ class ClientForm(forms.ModelForm):
 
         ## Provide one of (fields, exclude):
         # fields = ('name', 'billing_address', 'invoice_email', 'payment_terms',)
-        # fields = '__all__'
-        exclude = ['user']
+        fields = '__all__'
+        # exclude = ('user', )
 
 
 class ProjectForm(forms.ModelForm):

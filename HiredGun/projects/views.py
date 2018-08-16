@@ -47,7 +47,8 @@ class ClientDetailView(LoginRequiredMixin, generic.DetailView):
 class ClientCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = Client
     form = ClientForm
-    fields = '__all__'
+    # fields = '__all__'
+    # exclude = ('user', )
     success_url = reverse_lazy('projects:clients')
 
 class ClientUpdateView(LoginRequiredMixin, generic.edit.UpdateView):

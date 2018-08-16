@@ -10,6 +10,7 @@
   <thead>
     <tr>
       <th scope="col">Invoice</th>
+      <th scope="col">Client</th>
       <th scope="col">PK (debug)</th>
       <th scope="col">n_projects (debug)</th>
       <th scope="col">Actions</th>
@@ -19,6 +20,9 @@
   <tr>
     <td>
       <a href="{% url 'invoices:invoice-detail' invoice.pk %}">{{ invoice }}</a>
+    </td>
+    <td>
+      <a href="{% url 'projects:client-detail' invoice.client.pk %}">{{ invoice.client }}</a>
     </td>
     <td>
       {{ invoice.pk }}

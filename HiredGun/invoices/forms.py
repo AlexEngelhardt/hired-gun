@@ -12,13 +12,15 @@ class InvoiceForm(forms.ModelForm):
     
     def __init__(self, user, client_pk, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
+        
+        the_client = Client.objects.get(id=client_pk)
+        
         self.fields['project'].queryset = Project.objects.filter(client=client_pk)
         self.fields['project'].required = False
         
         # filter() returns a queryset, get() a single entity
         self.fields['client'].queryset = Client.objects.filter(id=client_pk)
-        self.fields['client'].initial = Client.objects.get(id=client_pk)
+        self.fields['client'].initial = the_client
 
         self.fields['invoice_no'].initial = Invoice.generate_invoice_number(user)
 
@@ -26,6 +28,8 @@ class InvoiceForm(forms.ModelForm):
         self.fields['to_date'].initial = datetime.date.today().replace(day=1) - datetime.timedelta(days=1)
         self.fields['invoice_date'].initial = datetime.date.today()
 
+        self.fields['due_date'].initial = self.object.compute_due_date()
+        
     class Meta:
         model = Invoice
         fields = '__all__'
