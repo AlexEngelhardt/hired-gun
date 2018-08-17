@@ -11,15 +11,15 @@ class ClientForm(forms.ModelForm):
 
         ## Provide one of (fields, exclude):
         # fields = ('name', 'billing_address', 'invoice_email', 'payment_terms',)
-        fields = '__all__'
-        # exclude = ('user', )
+        # fields = '__all__'
+        exclude = ('user', )
 
 
 class ProjectForm(forms.ModelForm):
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, the_user, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['client'].queryset = Client.objects.filter(user=user)
+        self.fields['client'].queryset = Client.objects.filter(user=the_user)
     
     
     class Meta:

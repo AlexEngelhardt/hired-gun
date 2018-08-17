@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import ClientForm, ProjectForm, SessionForm
 from .models import Client, Project, Session
-
+from django.contrib.auth.models import User
 
 ################################################################
 #### Index
@@ -46,15 +46,18 @@ class ClientDetailView(LoginRequiredMixin, generic.DetailView):
 
 class ClientCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = Client
-    form = ClientForm
-    # fields = '__all__'
-    # exclude = ('user', )
+    form_class = ClientForm
     success_url = reverse_lazy('projects:clients')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        # omg h4x
+        return super().form_valid(form)
+
 
 class ClientUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     model = Client
-    form = ClientForm
-    fields = '__all__'
+    form_class = ClientForm
     success_url = reverse_lazy('projects:clients')
     
 class ClientDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -81,15 +84,25 @@ class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
 
 class ProjectCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = Project
-    form = ProjectForm
-    fields = '__all__'
+    form_class = ProjectForm
     success_url = reverse_lazy('projects:projects')
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['the_user'] = self.request.user  # this gets pushed as an argument into the __init__ method
+        return kwargs
 
 class ProjectUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     model = Project
-    form = ProjectForm
-    fields = '__all__'
+    form_class = ProjectForm
     success_url = reverse_lazy('projects:projects')
+
+    # TODO it should be possible to unite the redundant code in ProjectCreateView and ProjectUpdateView
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['the_user'] = self.request.user  # this gets pushed as an argument into the __init__ method
+        return kwargs
     
 class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Project
@@ -116,15 +129,13 @@ class SessionDetailView(LoginRequiredMixin, generic.DetailView):
 
 class SessionCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = Session
-    form = SessionForm
-    fields = '__all__'
+    form_class = SessionForm
     success_url = reverse_lazy('projects:sessions')
 
 
 class SessionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     model = Session
-    form = SessionForm
-    fields = '__all__'
+    form_class = SessionForm
     success_url = reverse_lazy('projects:session-list')
     
 class SessionDeleteView(LoginRequiredMixin, generic.DeleteView):
