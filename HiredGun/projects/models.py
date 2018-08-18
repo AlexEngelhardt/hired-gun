@@ -66,7 +66,7 @@ class Project(models.Model):
             return datetime.date.today() - datetime.timedelta(days=31) <= \
                 self.end_date <= \
                 datetime.date.today()
-    
+
 
 class Session(models.Model):
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
@@ -75,7 +75,7 @@ class Session(models.Model):
     # I want to supply either "units worked" (e.g. 0.5 days), or a start and end time, and have
     #  the app compute the number of hours / days itself
     units_worked = models.DecimalField(max_digits=4, decimal_places=2)
-    
+
     # Only units_worked is required. But if you supply these 3 fields, it can be auto-computed later
     #  (you might have to use that Ajax thingy, or jQuery, or whatever)
     start_time = models.TimeField(blank=True, null=True)

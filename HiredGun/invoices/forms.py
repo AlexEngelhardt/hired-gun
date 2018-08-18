@@ -28,7 +28,10 @@ class InvoiceForm(forms.ModelForm):
         self.fields['to_date'].initial = datetime.date.today().replace(day=1) - datetime.timedelta(days=1)
         self.fields['invoice_date'].initial = datetime.date.today()
 
-        self.fields['due_date'].initial = self.object.compute_due_date()
+        # TODO I'm reaaally not sure if I should set the model's (not the form's!) client here.
+        # But otherwise I wouldn't be able to compute_due_date(), because it currently needs the client set
+        self.instance.client = the_client
+        self.fields['due_date'].initial = self.instance.compute_due_date()
         
     class Meta:
         model = Invoice

@@ -10,7 +10,6 @@
   - YTD earned. With graphs.
   - Separate Cashflow from earned. I.e., sessions from invoice_paids
 - Get all sessions that are not yet invoiced 
-  - How? Either by `Session.get_number_of_associated_invoices()`? Then >1 is bad, and ==0 is bad too
 
 **Authentication**
 
