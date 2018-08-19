@@ -17,7 +17,7 @@
 
 <ul>
   <li>Client: {{ invoice.client }}</li>
-  <li>Amount: {{ invoice.get_amount }}€</li>
+  <li>Amount: {{ invoice.get_amount | floatformat:"2" }}€</li>
   <li>Paid: {{ invoice.is_paid }}</li>
 </ul>
 

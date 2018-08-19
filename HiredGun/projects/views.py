@@ -131,13 +131,25 @@ class SessionCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = Session
     form_class = SessionForm
     success_url = reverse_lazy('projects:sessions')
-
+    
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super().get_form_kwargs(*args, **kwargs)
+        kwargs['user'] = self.request.user
+        return kwargs
+    
 
 class SessionUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     model = Session
     form_class = SessionForm
-    success_url = reverse_lazy('projects:session-list')
+    success_url = reverse_lazy('projects:sessions')
     
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super().get_form_kwargs(*args, **kwargs)
+        kwargs['user'] = self.request.user
+        return kwargs
+
+
+
 class SessionDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Session
     success_url = reverse_lazy('projects:sessions')

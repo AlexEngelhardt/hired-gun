@@ -6,10 +6,11 @@
 
 **ASAP**
 
+- Get all sessions that are not yet invoiced 
 - Better reports:
   - YTD earned. With graphs.
   - Separate Cashflow from earned. I.e., sessions from invoice_paids
-- Get all sessions that are not yet invoiced 
+- Sessions export feature. Non-normalized, i.e. with client and project columns. For easy migration in new system, for when (not if) I'll switch in the future
 
 **Authentication**
 
@@ -41,8 +42,6 @@
 - Yearly overview
   - A table with columns year, month, $ worked, cashflow in, YTD $ worked
   - Maybe include a matplotlib/seaborn plot on that page?
-- List unpaid invoices
-- List overdue invoices
   
 
 **Add/Edit session form**
@@ -70,6 +69,9 @@
 
 **Invoices App**
 
+- List unpaid invoices
+- List overdue invoices
+- Below the invoice pdf, as a second sheet maybe, add a list of all billed sessions
 - How to *fix* sessions for a specific invoice? They should be non-mutable afterwards (or maybe only with a warning!)
   - Either add attribute 'invoiced' to a session, or with an m:n table of invoices:sessions
 - How to ensure invoice no. uniqueness and continuity?

@@ -16,6 +16,7 @@
 
 <p>Client: {{ session.project.client }}</p>
 <p>Project: {{ session.project }}</p>
+<p>Invoiced: {% if session.invoice %} {{ session.invoice }} {% else %} Not yet {% endif %}</p>
 
 <h4>Details</h4>
 <p>Worked {{ session.units_worked }} {{ session.project.rate_unit }}s </p>

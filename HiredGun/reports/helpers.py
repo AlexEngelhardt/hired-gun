@@ -7,6 +7,10 @@ from django.db.models import F, Sum
 
 def get_total_earned(sessions):
     total_earned = sessions.aggregate(cash = Sum(F('units_worked') * F('project__rate')))['cash']
+
+    if not total_earned:
+        total_earned = 0
+    
     # total_earned is a Decimal.decimal now, not a float yet!
     return float(total_earned)
 

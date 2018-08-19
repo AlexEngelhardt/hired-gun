@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Invoice
 from .forms import InvoiceForm
-from projects.models import Client, Project
+from projects.models import Client, Project, Session
 
 # Create your views here.
 
@@ -63,6 +63,20 @@ class InvoiceCreateView(LoginRequiredMixin, generic.edit.CreateView):
         context['client'] = Client.objects.get(id=self.kwargs['client_pk'])
         return context
     
+    def form_valid(self, form):
+        new_invoice = form.save(commit=False)
+        # You must first save the invoice model, only then can you add its PK to the sessions
+        new_invoice.save()
+
+        # Remove all existing session associations and add the newly submitted ones:
+        Session.objects.filter(invoice=new_invoice).update(invoice=None)
+        # ^-- of course, in the CreateView this makes no sense, but I keep it here to show these two classes can be easily consolidated (TODO) soon
+        for sesh in form.cleaned_data['sessions']:
+            new_invoice.session_set.add(sesh)
+
+        return super().form_valid(form)
+
+    
 class InvoiceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     model = Invoice
     form_class = InvoiceForm
@@ -78,7 +92,18 @@ class InvoiceUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
         context = super().get_context_data(**kwargs)
         context['client'] = Client.objects.get(id=self.object.client.pk)
         return context
-        
+
+    def form_valid(self, form):
+        new_invoice = form.save(commit=False)
+        # You must first save the invoice model, only then can you add its PK to the sessions
+        new_invoice.save()
+
+        # Remove all existing session associations and add the newly submitted ones:
+        Session.objects.filter(invoice=new_invoice).update(invoice=None)
+        for sesh in form.cleaned_data['sessions']:
+            new_invoice.session_set.add(sesh)
+
+        return super().form_valid(form)
 
 class InvoiceDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Invoice

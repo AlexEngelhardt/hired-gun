@@ -11,8 +11,10 @@ from reports.helpers import get_total_earned
 
 class Invoice(models.Model):
     invoice_no = models.CharField(max_length=128)
+    
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     project = models.ManyToManyField(Project)
+    
     from_date = models.DateField()
     to_date = models.DateField()
     invoice_date = models.DateField()
@@ -86,12 +88,11 @@ class Invoice(models.Model):
         project_ids = attached_sessions.values_list('project').distinct()
         projects = Project.objects.filter(pk__in=project_ids)
 
-        # TODO this looks like duplicate logic. I'm sure this can be refactored nicely somehow
+        # TODO this looks like duplicate logic. I'm sure this can be refactored nicely somehow. Maybe a custom Manager()?
         projects = projects.annotate(
             units_worked=Sum(F('session__units_worked'),
                              filter=Q(
-                                 session__date__gte=self.from_date,
-                                 session__date__lte=self.to_date
+                                 session__invoice=self.pk
                              )
             ),
             amount=F('units_worked') * F('rate')
@@ -101,12 +102,6 @@ class Invoice(models.Model):
 
     def get_attached_sessions(self):
         qs = Session.objects.filter(
-            project__client=self.client,
-            date__lte=self.to_date,
-            date__gte=self.from_date
+            invoice=self.pk
         )
-        if self.project.count() != 0:  # if no projects attached, just use all available
-            qs = qs.filter(
-                project__in=self.project.all()
-            )
         return qs

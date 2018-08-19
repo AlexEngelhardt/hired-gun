@@ -72,6 +72,10 @@ class Session(models.Model):
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
     date = models.DateField()
 
+    # You can't `from invoices.models import Invoice` here, because that would be a circular import.
+    # Instead, you can just write the referenced model as a string here:
+    invoice = models.ForeignKey('invoices.Invoice', on_delete=models.SET_NULL, blank=True, null=True)
+    
     # I want to supply either "units worked" (e.g. 0.5 days), or a start and end time, and have
     #  the app compute the number of hours / days itself
     units_worked = models.DecimalField(max_digits=4, decimal_places=2)

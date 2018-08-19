@@ -3,7 +3,7 @@ import datetime
 from django import forms
 
 from .models import Invoice
-from projects.models import Client, Project
+from projects.models import Client, Project, Session
 
 class InvoiceForm(forms.ModelForm):
     # I don't actually need the 'user' in the __init__ or anywhere else right now.
@@ -32,7 +32,15 @@ class InvoiceForm(forms.ModelForm):
         # But otherwise I wouldn't be able to compute_due_date(), because it currently needs the client set
         self.instance.client = the_client
         self.fields['due_date'].initial = self.instance.compute_due_date()
-        
+
+        # Here I add a manual additional checkbox select for "all" sessions within a certain time frame
+        self.fields['sessions'] = forms.ModelMultipleChoiceField(
+            queryset = Session.objects.filter(project__client=the_client),  # TODO more filters :D
+            # widget = forms.CheckboxSelectMultiple
+            required = False
+        )
+        self.fields['sessions'].initial = Session.objects.filter(invoice__isnull=False).filter(invoice=self.instance)
+            
     class Meta:
         model = Invoice
         fields = '__all__'
