@@ -5,12 +5,11 @@
 - also grep this repo for TODO within .py files and migrate them here
 
 **ASAP**
-
-- Get all sessions that are not yet invoiced 
+ 
 - Better reports:
   - YTD earned. With graphs.
   - Separate Cashflow from earned. I.e., sessions from invoice_paids
-- Sessions export feature. Non-normalized, i.e. with client and project columns. For easy migration in new system, for when (not if) I'll switch in the future
+
 
 **Authentication**
 

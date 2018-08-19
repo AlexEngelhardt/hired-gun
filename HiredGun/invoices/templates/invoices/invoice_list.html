@@ -6,6 +6,8 @@
 
 {% if invoices %}
 
+ <a class="btn btn-default" href="{% url 'invoices:invoices-csv' %}"><span class="glyphicon glyphicon-download-alt"></span> Download CSV</a></p>
+
 <table class="table">
   <thead>
     <tr>

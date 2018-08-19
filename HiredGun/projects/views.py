@@ -1,7 +1,9 @@
+import csv
+
 from django.views import generic
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -9,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ClientForm, ProjectForm, SessionForm
 from .models import Client, Project, Session
 from django.contrib.auth.models import User
+
 
 ################################################################
 #### Index
@@ -53,7 +56,6 @@ class ClientCreateView(LoginRequiredMixin, generic.edit.CreateView):
         form.instance.user = self.request.user
         # omg h4x
         return super().form_valid(form)
-
 
 class ClientUpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     model = Client
@@ -119,6 +121,10 @@ class SessionListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Session.objects.filter(project__client__user=self.request.user)
 
+class SessionsNotInvoicedView(SessionListView):
+    
+    def get_queryset(self):
+        return Session.objects.filter(project__client__user=self.request.user).filter(invoice__isnull=True)
     
 class SessionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Session
@@ -154,3 +160,39 @@ class SessionDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Session
     success_url = reverse_lazy('projects:sessions')
 
+
+################################################################
+#### CSV export views
+
+def csv_export_view(model, request, queryset, filename="export"):
+    """
+    Helper function holding redundant code for the CSV exports of 
+    Clients, Projects, Sessions
+    model = Client, e.g.
+    """
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
+
+    writer = csv.writer(response)
+
+    writer.writerow(model.get_csv_head())
+  
+    for guy in queryset:
+        writer.writerow(guy.get_csv_line())
+
+    return response
+
+
+def client_csv_export_view(request):
+    queryset = Client.objects.filter(user=request.user)
+    return csv_export_view(Client, request, queryset, "clients.csv")
+
+
+def project_csv_export_view(request):
+    queryset = Project.objects.filter(client__user=request.user)
+    return csv_export_view(Project, request, queryset, "projects.csv")
+
+
+def session_csv_export_view(request):
+    queryset = Session.objects.filter(project__client__user=request.user)
+    return csv_export_view(Session, request, queryset, "sessions.csv")

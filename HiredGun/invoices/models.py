@@ -13,7 +13,6 @@ class Invoice(models.Model):
     invoice_no = models.CharField(max_length=128)
     
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    project = models.ManyToManyField(Project)
     
     from_date = models.DateField()
     to_date = models.DateField()
@@ -21,6 +20,27 @@ class Invoice(models.Model):
     paid_date = models.DateField(blank=True, null=True)
     due_date = models.DateField(blank=True, null=True)
 
+
+    @staticmethod
+    def get_csv_head():
+        line = ["ID", "invoice_no", "client", "from_date",
+                "to_date", "invoice_date", "paid_date", "due_date"]
+        return line
+    
+    def get_csv_line(self):
+        line = [
+            str(self.pk),
+            str(self.invoice_no),
+            str(self.client),
+            str(self.from_date),
+            str(self.to_date),
+            str(self.invoice_date),
+            str(self.paid_date),
+            str(self.due_date)
+            ]
+        return line
+
+    
     def __str__(self):
         return self.invoice_no
 

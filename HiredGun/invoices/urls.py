@@ -6,7 +6,8 @@ app_name = 'invoices'
 urlpatterns = [
     path('', views.index, name='index'),
     
-    path('list/', views.InvoiceListView.as_view(), name='invoice-list'),
+    path('invoices/', views.InvoiceListView.as_view(), name='invoice-list'),
+    path('invoices/csv', views.invoice_csv_export_view, name='invoices-csv'),
     path('invoice/<int:pk>/', views.InvoiceDetailView.as_view(), name='invoice-detail'),
     path('invoice/<int:pk>/print', views.InvoicePrintView.as_view(), name='invoice-print'),
 

@@ -35,7 +35,10 @@ class InvoiceForm(forms.ModelForm):
 
         # Here I add a manual additional checkbox select for "all" sessions within a certain time frame
         self.fields['sessions'] = forms.ModelMultipleChoiceField(
-            queryset = Session.objects.filter(project__client=the_client),  # TODO more filters :D
+            queryset = Session.objects.filter(
+                project__client=the_client,
+                invoice__isnull=True
+            ),  # TODO more filters :D
             # widget = forms.CheckboxSelectMultiple
             required = False
         )

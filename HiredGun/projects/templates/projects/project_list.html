@@ -4,7 +4,7 @@
 
 <h1>Your projects</h1>
 
-<p><a class="btn btn-default" href="{% url 'projects:add-project' %}"><span class="glyphicon glyphicon-plus"></span> Add project</a></p>
+<p><a class="btn btn-default" href="{% url 'projects:add-project' %}"><span class="glyphicon glyphicon-plus"></span> Add project</a> <a class="btn btn-default" href="{% url 'projects:projects-csv' %}"><span class="glyphicon glyphicon-download-alt"></span> Download CSV</a></p></p>
 
 {% if projects %}
 <table class="table">

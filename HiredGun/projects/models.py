@@ -20,7 +20,24 @@ class Client(models.Model):
                                          ('PIA', 'Payment in advance'),
                                      ),
                                      default='Net 30')
+
+    @staticmethod
+    def get_csv_head():
+        # TODO can I do this automatically somehow, looping over all fields?
+        line = ["ID", "user", "name", "billing_address", "invoice_email", "payment_terms"]
+        return line
     
+    def get_csv_line(self):
+        line = [
+            str(self.pk),
+            str(self.user),
+            str(self.name),
+            str(self.billing_address),
+            str(self.invoice_email),
+            str(self.payment_terms)
+            ]
+        return line
+        
     def __str__(self):
         # The string representation of a single instance
         return self.name
@@ -43,6 +60,26 @@ class Project(models.Model):
     
     def __str__(self):
         return self.name
+
+
+    @staticmethod
+    def get_csv_head():
+        line = ["ID", "name", "client", "rate", "rate_unit", "start_date", "end_date",
+                "notes"]
+        return line
+    
+    def get_csv_line(self):
+        line = [
+            str(self.pk),
+            str(self.name),
+            str(self.client),
+            str(self.rate),
+            str(self.rate_unit),
+            str(self.start_date),
+            str(self.end_date),
+            str(self.notes)
+            ]
+        return line
     
     def is_active(self):
         today = datetime.date.today()
@@ -89,6 +126,28 @@ class Session(models.Model):
     description = models.TextField(blank=True, null=True)
     # If I'll use a 'duration' field, it should be blank=True but null=False, so that it has to be auto-generated
 
+    @staticmethod
+    def get_csv_head():
+        # TODO can I do this automatically somehow, looping over all fields?
+        line = ["ID", "project", "date", "invoice", "units_worked",
+                "start_time", "end_time", "break_duration", "description"]
+        return line
+    
+    def get_csv_line(self):
+        line = [
+            str(self.pk),
+            str(self.project),
+            str(self.date),
+            str(self.invoice),
+            str(self.units_worked),
+            str(self.start_time),
+            str(self.end_time),
+            str(self.break_duration),
+            str(self.description)
+            ]
+        return line
+
+    
     def get_units_worked(self):
         # TODO maybe I can auto-compute this value later, instead of specifying it every time
         return self.units_worked

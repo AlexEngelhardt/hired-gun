@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Invoice
 from .forms import InvoiceForm
 from projects.models import Client, Project, Session
+from projects.views import csv_export_view
 
 # Create your views here.
 
@@ -23,6 +24,10 @@ class InvoiceListView(LoginRequiredMixin, generic.ListView):
     model = Invoice
     def get_queryset(self):
         return Invoice.objects.filter(client__user=self.request.user)
+
+def invoice_csv_export_view(request):
+    queryset = Invoice.objects.filter(client__user=request.user)
+    return csv_export_view(Invoice, request, queryset, "invoices.csv")
 
     
 class InvoiceDetailView(LoginRequiredMixin, generic.DetailView):
