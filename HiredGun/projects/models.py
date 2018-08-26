@@ -51,7 +51,7 @@ class Project(models.Model):
                                  choices=(
                                      ('hr', 'Hour'),
                                      ('day', 'Day'),
-                                     ('fixed', 'Fixed'),
+                                     ('fix', 'Fixed'),
                                  ),
                                  default='hr')
     start_date = models.DateField()
@@ -80,6 +80,12 @@ class Project(models.Model):
             str(self.notes)
             ]
         return line
+
+    def get_units_worked(self):
+        units = 0
+        for sesh in self.session_set.all():
+            units += sesh.get_units_worked()
+        return units
     
     def is_active(self):
         today = datetime.date.today()
@@ -93,7 +99,8 @@ class Project(models.Model):
     is_active.admin_order_field = 'end_date'
     is_active.boolean = True
     is_active.short_description = 'PROJ Active?'
-        
+
+
     def ended_recently(self):
         if self.end_date is None:
             return False
@@ -115,7 +122,7 @@ class Session(models.Model):
     
     # I want to supply either "units worked" (e.g. 0.5 days), or a start and end time, and have
     #  the app compute the number of hours / days itself
-    units_worked = models.DecimalField(max_digits=4, decimal_places=2)
+    units_worked = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=False, default=0)  # blank=True because then it'd get auto-computed from start_time, end_time, break_duration
 
     # Only units_worked is required. But if you supply these 3 fields, it can be auto-computed later
     #  (you might have to use that Ajax thingy, or jQuery, or whatever)

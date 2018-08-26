@@ -14,9 +14,9 @@
 
 <h4>Project</h4>
 
-<p>Client: {{ session.project.client }}</p>
-<p>Project: {{ session.project }}</p>
-<p>Invoiced: {% if session.invoice %} {{ session.invoice }} {% else %} Not yet {% endif %}</p>
+<p>Client: <a href="{% url 'projects:client-detail' session.project.client.id %}">{{ session.project.client }}</a></p>
+<p>Project: <a href="{% url 'projects:project-detail' session.project.id %}">{{ session.project }}</a></p>
+<p>Invoiced: {% if session.invoice %} <a href="{% url 'invoices:invoice-detail' session.invoice.id %}">{{ session.invoice }}</a> {% else %} Not yet {% endif %}</p>
 
 <h4>Details</h4>
 <p>Worked {{ session.units_worked }} {{ session.project.rate_unit }}s </p>

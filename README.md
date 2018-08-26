@@ -20,6 +20,10 @@ python3 manage.py loaddata projects/fixtures/Session.json
   - The user `admin` with password `adminadmin` exists too.
 - Go view/edit/delete some data, and build a few reports!
 
+### How to deploy on AWS / Elastic Beanstalk
+
+See [here](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html)
+
 ### Django notes
 
 Best order for creating a new app:

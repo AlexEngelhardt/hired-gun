@@ -26,6 +26,9 @@
 
 <h2 class="text-center">Total earned: {{ total_earned | floatformat:"2" }}€</h2>
 
+{{ plot_script | safe }}
+{{ plot_div | safe }}
+
 <table class="table table-condensed table-hover table-bordered table-striped">
 
   <thead>
@@ -44,7 +47,7 @@
     </td>
     <td>
       {% for session in todays_sessions %}
-        {{ session.project.client }} <br />
+        <a href="{% url 'projects:client-detail' session.project.client.id %}">{{ session.project.client }}</a> <br />
       {% endfor %}
     </td>
     <td>

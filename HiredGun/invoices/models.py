@@ -24,10 +24,14 @@ class Invoice(models.Model):
     @staticmethod
     def get_csv_head():
         line = ["ID", "invoice_no", "client", "from_date",
-                "to_date", "invoice_date", "paid_date", "due_date"]
+                "to_date", "invoice_date", "paid_date", "due_date", "net_amount", "gross_amount", "sessions"]
         return line
     
     def get_csv_line(self):
+
+        sessions_list = list(self.session_set.values_list('id', flat=True))        
+        sessions_str = ",".join(map(str, sessions_list))
+        
         line = [
             str(self.pk),
             str(self.invoice_no),
@@ -36,7 +40,10 @@ class Invoice(models.Model):
             str(self.to_date),
             str(self.invoice_date),
             str(self.paid_date),
-            str(self.due_date)
+            str(self.due_date),
+            str(self.get_amount()),
+            str(self.get_gross_total()),
+            str(sessions_str)
             ]
         return line
 
@@ -79,7 +86,10 @@ class Invoice(models.Model):
 
 
     def is_overdue(self):
-        return self.due_date < datetime.date.today()
+        if self.is_paid:
+            return False
+        else:
+            return self.due_date < datetime.date.today() 
 
     def is_paid(self):
         return self.paid_date is not None

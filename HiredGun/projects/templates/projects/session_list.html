@@ -31,7 +31,7 @@
       <a href="{% url 'projects:session-detail' session.id %}">{{ session.date }}</a>
     </td>
     <td>
-      {{ session.project.client }}
+      <a href="{% url 'projects:client-detail' session.project.client.id %}">{{ session.project.client }}</a>
     </td>
     <td>
       {% if session.invoice %}<a href="{% url 'invoices:invoice-detail' session.invoice.pk %}">{{ session.invoice }}</a>{% endif %}

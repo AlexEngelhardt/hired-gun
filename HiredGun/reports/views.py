@@ -5,6 +5,11 @@ from django.shortcuts import render, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
 
+from bokeh.plotting import figure
+from bokeh.resources import CDN
+from bokeh.embed import components
+from bokeh.embed import file_html
+
 from projects.models import Client, Project, Session
 
 # I must store this function externally to avoid circular dependencies
@@ -19,6 +24,11 @@ def last_day_of_month(any_day):
     next_month = any_day.replace(day=28) + datetime.timedelta(days=4)  # dirty, but works
     return next_month - datetime.timedelta(days=next_month.day)
 
+def create_plot():
+    plot = figure()
+    plot.circle([1,2], [3,4])
+    script, div = components(plot, CDN)
+    return script, div
 
 def prepare_report(user, from_date, to_date, client_ids=[], project_ids=[]):
     """
@@ -116,5 +126,9 @@ def earnings_report(request):
     project_ids = request.GET.getlist('project')
 
     context = prepare_report(request.user, from_date, to_date, client_ids, project_ids)
+
+    the_script, the_div = create_plot()
+    context['plot_script'] = the_script
+    context['plot_div'] = the_div
 
     return render(request, 'reports/report.html', context)

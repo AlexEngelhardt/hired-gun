@@ -1,6 +1,7 @@
 import datetime
 
 from django import forms
+from django.db.models import Q
 
 from .models import Invoice
 from projects.models import Client, Project, Session
@@ -15,8 +16,8 @@ class InvoiceForm(forms.ModelForm):
         
         the_client = Client.objects.get(id=client_pk)
         
-        self.fields['project'].queryset = Project.objects.filter(client=client_pk)
-        self.fields['project'].required = False
+        #self.fields['project'].queryset = Project.objects.filter(client=client_pk)
+        #self.fields['project'].required = False
         
         # filter() returns a queryset, get() a single entity
         self.fields['client'].queryset = Client.objects.filter(id=client_pk)
@@ -36,10 +37,10 @@ class InvoiceForm(forms.ModelForm):
         # Here I add a manual additional checkbox select for "all" sessions within a certain time frame
         self.fields['sessions'] = forms.ModelMultipleChoiceField(
             queryset = Session.objects.filter(
-                project__client=the_client,
-                invoice__isnull=True
-            ),  # TODO more filters :D
-            # widget = forms.CheckboxSelectMultiple
+                Q(invoice__isnull=True) | Q(invoice=self.instance),
+                project__client=the_client
+            ),
+            # widget = forms.CheckboxSelectMultiple,  # default: forms.SelectMultiple
             required = False
         )
         self.fields['sessions'].initial = Session.objects.filter(invoice__isnull=False).filter(invoice=self.instance)

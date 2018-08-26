@@ -33,6 +33,8 @@
 
 <h3>Sessions logged:</h3>
 
+<p>Total of {{ project.get_units_worked }} {{ project.rate_unit }}s logged.</p>
+
 <ul>
   {% for session in project.session_set.all %}
     <li><a href="{% url 'projects:session-detail' pk=session.pk %}">{{ session.date }}</a></li>

@@ -5,10 +5,16 @@
 - also grep this repo for TODO within .py files and migrate them here
 
 **ASAP**
- 
+
+- Reports graph: Separate page for a YTD report
+- Entering session: Compute duration from start time, end time, break duration
+  - duration field is then blank=True, null=False
 - Better reports:
+  - Separate Cashflow report, counting "invoice paid" amounts.
   - YTD earned. With graphs.
-  - Separate Cashflow from earned. I.e., sessions from invoice_paids
+  - Custom range report: If more months, align them next to each other with each month's sum at bottom (like Arc work log)
+- Currently, my model doesn't allow to set multiple rates for one project (e.g. on-site and remote). I'd have to add a separate project for remote work.
+- Read [this post](https://blog.doordash.com/tips-for-building-high-quality-django-apps-at-scale-a5a25917b2b5) after Django feels a bit more intuitive
 
 
 **Authentication**
@@ -90,6 +96,11 @@
 - Use [django-tables2](https://django-tables2.readthedocs.io/en/latest/) instead of manually written HTML tables. They are also sortable by column
 - Multiple currencies besides €
 
+**AJAX/jQuery/etc**
+
+- Create invoice: Show the selectable sessions dynamically, first by from/to-date, by client -> project -> sessions
+  - Ideally, live-update the invoice amount
+
 **Invoices**
 
 - I should make sure that a Session can only be billed in *one* Invoice. How? An extra table 'session_invoice' where constraint PK=(session, invoice)?
@@ -115,3 +126,12 @@
 - Build a FormMixin and consolidate e.g. ClientCreateView and ClientUpdateView
   - See `ProductFormMixin` in GSA/product/views.py
 - Payment terms: 2% 10 Net 30, COD, and PIA don't yet work in the invoice app: You need to set a due date
+
+
+
+### Long-term / Features
+
+- A CV functionality. Track project descriptions, tools used, etc., and
+  have it exportable as HTML, Word and PDF
+- Omg the second image looks bomb: http://merehead.com/blog/build-online-crm-system/
+- The "Reports" feature could have a Sankey Chart of `Clients -> Projects -> Income`. Can I put a Shiny app in a Django view?

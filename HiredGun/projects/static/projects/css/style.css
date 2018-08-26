@@ -8,6 +8,12 @@
     padding: 20px 20px 20px 40px;
 }
 
+.page-footer {
+    background-color: #708090;
+    margin-top: 10px;
+    padding: 5px 5px 5px 10px;
+}
+
 .page-header, .page-header a, .page-header a:visited, .page-header a:active {
     color: #ffffff;
 }
@@ -58,6 +64,11 @@ h1, h2, h3, h4 {
 table.table.table-striped tr.weekend td {
     /* https://stackoverflow.com/questions/25043759/overriding-bootstrap-table-striped-css */
     background-color: #708090;
+}
+
+.table-nonfluid {
+    /* https://stackoverflow.com/questions/10687306/why-do-twitter-bootstrap-tables-always-have-100-width */ 
+   width: auto !important;
 }
 
 p {

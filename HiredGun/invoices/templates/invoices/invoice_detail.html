@@ -15,11 +15,20 @@
   </a>
 </h1>
 
-<ul>
-  <li>Client: {{ invoice.client }}</li>
-  <li>Amount: {{ invoice.get_amount | floatformat:"2" }}€</li>
-  <li>Paid: {{ invoice.is_paid }}</li>
-</ul>
+<table class="table table-nonfluid">
+  <tr>
+    <td><strong>Client</strong></td><td>{{ invoice.client }}</td>
+  </tr>
+  <tr>
+    <td><strong>Net amount</strong></td><td> {{ invoice.get_amount | floatformat:"2" }}€</td>
+  </tr>
+  <tr>
+    <td><strong>Gross amount</strong></td><td> {{ invoice.get_gross_total | floatformat:"2" }}€</td>
+  </tr>
+  <tr>
+    <td><strong>Paid</strong></td><td> {% if invoice.is_paid %}{{ invoice.paid_date }}{% else %}<span class="text-danger">No</span>{% endif %}</td>
+  </tr>
+</table>
 
 {% if projects %}
 <h3>Invoice is bound to these projects</h3>
@@ -36,7 +45,7 @@
 <h3>These sessions are contained</h3>
 <ul>
   {% for session in invoice.get_attached_sessions %}
-  <li>{{ session }}</li>
+  <li><a href="{% url 'projects:session-detail' session.id %}">{{ session }}</a></li>
   {% endfor %}
 </ul>
 {% else %}
