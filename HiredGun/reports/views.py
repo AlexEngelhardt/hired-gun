@@ -127,9 +127,10 @@ from bokeh.plotting import figure
 from bokeh.resources import CDN
 from bokeh.embed import components
 from bokeh.embed import file_html
+from django.db.models.functions.datetime import ExtractMonth
+import pandas as pd
 
-def create_plot(df):
-
+def create_barplot(df):
     x = list(map(str, df.date))
     y = df.earned
     
@@ -139,20 +140,32 @@ def create_plot(df):
     script, div = components(plot, CDN)
     return script, div
 
-
-from django.db.models.functions.datetime import ExtractMonth
-import pandas as pd
+def create_ytdplot(df):
+    x = df.date
+    y = df['cumsum']
+    
+    plot = figure(plot_height=300, plot_width=800, title='Cumulative earnings', x_axis_type='datetime')
+    plot.line(x=x, y=y)
+    
+    script, div = components(plot, CDN)
+    return script, div
+    
 
 @login_required
-def simple_plot(request):
+def plots(request):
     sessions = Session.objects.filter(project__client__user=request.user)
     cashies = list(map(lambda x: (x.date.month, x.date.year, x.get_money_earned()), sessions))
     df = pd.DataFrame(cashies, columns=['month', 'year', 'earned']).groupby(['year', 'month']).agg({'earned': 'sum'})
     df['date'] = [datetime.date(x[0], x[1], 1) for x in df.index]
+    df['cumsum'] = df['earned'].cumsum()
     
-    the_script, the_div = create_plot(df)
+    the_script, the_div = create_barplot(df)
     context = {}
-    context['plot_script'] = the_script
-    context['plot_div'] = the_div
+    context['barplot_script'] = the_script
+    context['barplot_div'] = the_div
 
-    return render(request, 'reports/simple_plot.html', context)
+    ytd_script, ytd_div = create_ytdplot(df)
+    context['ytdplot_script'] = ytd_script
+    context['ytdplot_div'] = ytd_div
+
+    return render(request, 'reports/plots.html', context)
