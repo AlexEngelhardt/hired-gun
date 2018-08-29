@@ -13,8 +13,9 @@
     <tr>
       <th scope="col">Invoice</th>
       <th scope="col">Client</th>
+      <th scope="col">Invoice date</th>
+      <th scope="col">Net amount</th>
       <th scope="col">Paid</th>
-      <th scope="col">n_projects (debug)</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -27,10 +28,13 @@
       <a href="{% url 'projects:client-detail' invoice.client.pk %}">{{ invoice.client }}</a>
     </td>
     <td>
-      {% if invoice.is_overdue %}<span class="text-danger">Overdue</span>{% elif not invoice.is_paid %}<span class="text-warning">No</span>{% else %}{{ invoice.paid_date }}{% endif %}
+      {{ invoice.invoice_date }}
     </td>
     <td>
-      {{ invoice.project.count }}
+      {{ invoice.get_amount | floatformat:"2" }}
+    </td>
+    <td>
+      {% if invoice.is_overdue %}<span class="text-danger">Overdue</span>{% elif not invoice.is_paid %}<span class="text-warning">No</span>{% else %}{{ invoice.paid_date }}{% endif %}
     </td>
     <td>
       <a href="{% url 'invoices:edit-invoice' invoice.id %}"><span class="glyphicon glyphicon-pencil"></span></a>

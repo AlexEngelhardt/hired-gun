@@ -5,11 +5,6 @@ from django.shortcuts import render, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
 
-from bokeh.plotting import figure
-from bokeh.resources import CDN
-from bokeh.embed import components
-from bokeh.embed import file_html
-
 from projects.models import Client, Project, Session
 
 # I must store this function externally to avoid circular dependencies
@@ -24,11 +19,6 @@ def last_day_of_month(any_day):
     next_month = any_day.replace(day=28) + datetime.timedelta(days=4)  # dirty, but works
     return next_month - datetime.timedelta(days=next_month.day)
 
-def create_plot():
-    plot = figure()
-    plot.circle([1,2], [3,4])
-    script, div = components(plot, CDN)
-    return script, div
 
 def prepare_report(user, from_date, to_date, client_ids=[], project_ids=[]):
     """
@@ -127,8 +117,42 @@ def earnings_report(request):
 
     context = prepare_report(request.user, from_date, to_date, client_ids, project_ids)
 
-    the_script, the_div = create_plot()
+    return render(request, 'reports/report.html', context)
+
+
+################################################################
+#### Plots
+
+from bokeh.plotting import figure
+from bokeh.resources import CDN
+from bokeh.embed import components
+from bokeh.embed import file_html
+
+def create_plot(df):
+
+    x = list(map(str, df.date))
+    y = df.earned
+    
+    plot = figure(x_range=x, plot_height=300, plot_width=800, title='Monthly earnings')
+    plot.vbar(x=x, top=y, width=0.9)
+    
+    script, div = components(plot, CDN)
+    return script, div
+
+
+from django.db.models.functions.datetime import ExtractMonth
+import pandas as pd
+
+@login_required
+def simple_plot(request):
+    sessions = Session.objects.filter(project__client__user=request.user)
+    cashies = list(map(lambda x: (x.date.month, x.date.year, x.get_money_earned()), sessions))
+    df = pd.DataFrame(cashies, columns=['month', 'year', 'earned']).groupby(['year', 'month']).agg({'earned': 'sum'})
+    df['date'] = [datetime.date(x[0], x[1], 1) for x in df.index]
+    
+    the_script, the_div = create_plot(df)
+    context = {}
     context['plot_script'] = the_script
     context['plot_div'] = the_div
 
-    return render(request, 'reports/report.html', context)
+    return render(request, 'reports/simple_plot.html', context)

@@ -14,7 +14,6 @@
   - YTD earned. With graphs.
   - Custom range report: If more months, align them next to each other with each month's sum at bottom (like Arc work log)
 - Currently, my model doesn't allow to set multiple rates for one project (e.g. on-site and remote). I'd have to add a separate project for remote work.
-- Read [this post](https://blog.doordash.com/tips-for-building-high-quality-django-apps-at-scale-a5a25917b2b5) after Django feels a bit more intuitive
 
 
 **Authentication**
@@ -135,3 +134,6 @@
   have it exportable as HTML, Word and PDF
 - Omg the second image looks bomb: http://merehead.com/blog/build-online-crm-system/
 - The "Reports" feature could have a Sankey Chart of `Clients -> Projects -> Income`. Can I put a Shiny app in a Django view?
+- Suggestions from [this post](https://blog.doordash.com/tips-for-building-high-quality-django-apps-at-scale-a5a25917b2b5):
+  - Don't use separate apps if foreign keys span across.
+  - 

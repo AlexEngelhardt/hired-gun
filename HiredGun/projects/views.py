@@ -1,4 +1,5 @@
 import csv
+import datetime
 
 from django.views import generic
 from django.shortcuts import render, get_object_or_404, redirect
@@ -137,6 +138,10 @@ class SessionCreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = Session
     form_class = SessionForm
     success_url = reverse_lazy('projects:sessions')
+
+    initial = {
+        'date': datetime.date.today()
+    }
     
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super().get_form_kwargs(*args, **kwargs)

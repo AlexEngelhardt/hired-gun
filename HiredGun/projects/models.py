@@ -21,6 +21,9 @@ class Client(models.Model):
                                      ),
                                      default='Net 30')
 
+    class Meta:
+        ordering = ['name']
+        
     @staticmethod
     def get_csv_head():
         # TODO can I do this automatically somehow, looping over all fields?
@@ -60,6 +63,9 @@ class Project(models.Model):
     
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['-start_date']
 
 
     @staticmethod
@@ -133,6 +139,9 @@ class Session(models.Model):
     description = models.TextField(blank=True, null=True)
     # If I'll use a 'duration' field, it should be blank=True but null=False, so that it has to be auto-generated
 
+    class Meta:
+        ordering = ['-date']
+    
     @staticmethod
     def get_csv_head():
         # TODO can I do this automatically somehow, looping over all fields?

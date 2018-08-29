@@ -20,6 +20,8 @@ class Invoice(models.Model):
     paid_date = models.DateField(blank=True, null=True)
     due_date = models.DateField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['-invoice_date']
 
     @staticmethod
     def get_csv_head():
