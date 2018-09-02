@@ -128,7 +128,7 @@ class Session(models.Model):
     
     # I want to supply either "units worked" (e.g. 0.5 days), or a start and end time, and have
     #  the app compute the number of hours / days itself
-    units_worked = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=False, default=0)  # blank=True because then it'd get auto-computed from start_time, end_time, break_duration
+    units_worked = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=False)  # blank=True because then it'd get auto-computed from start_time, end_time, break_duration
 
     # Only units_worked is required. But if you supply these 3 fields, it can be auto-computed later
     #  (you might have to use that Ajax thingy, or jQuery, or whatever)
@@ -176,3 +176,29 @@ class Session(models.Model):
         return 'Session in ' + str(self.project) + \
            ' for ' + str(self.project.client)  + \
            ' on ' + str(self.date)
+
+    def save(self, *args, **kwargs):
+        """
+        Override model's save method: If we passed start_time, end_time, break_duration, but 
+        not units_worked, we'll autocompute it
+        """
+        if self.units_worked is None:
+            if self.project.rate_unit == 'hr':
+                today = datetime.date.today()
+                
+                hours_worked = (
+                    datetime.datetime.combine(today, self.end_time) -
+                    datetime.datetime.combine(today, self.start_time)
+                )
+                if self.break_duration is not None:
+                    hours_worked -= self.break_duration
+                    
+                self.units_worked = hours_worked.seconds / 60 / 60
+                
+            elif self.project.rate_unit == 'day':
+                self.units_worked = 1
+                
+            elif self.project.rate_unit == 'fix':
+                self.units_worked = 1
+                    
+        super().save(*args, **kwargs)

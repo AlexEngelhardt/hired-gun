@@ -86,9 +86,8 @@ class Invoice(models.Model):
             
         return due_date
 
-
     def is_overdue(self):
-        if self.is_paid:
+        if self.is_paid():
             return False
         else:
             return self.due_date < datetime.date.today() 

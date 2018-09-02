@@ -42,6 +42,7 @@ class SessionForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['project'].queryset = Project.objects.filter(client__user=user)
+        self.fields['units_worked'].help_text = 'Keep this field empty if your project is hourly and you want it autocomputed by start time, end time, and break duration'
 
     class Meta:
         model = Session

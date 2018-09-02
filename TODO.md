@@ -6,12 +6,8 @@
 
 **ASAP**
 
-- Reports graph: Separate page for a YTD report
-- Entering session: Compute duration from start time, end time, break duration
-  - duration field is then blank=True, null=False
 - Better reports:
   - Separate Cashflow report, counting "invoice paid" amounts.
-  - YTD earned. With graphs.
   - Custom range report: If more months, align them next to each other with each month's sum at bottom (like Arc work log)
 - Currently, my model doesn't allow to set multiple rates for one project (e.g. on-site and remote). I'd have to add a separate project for remote work.
 
