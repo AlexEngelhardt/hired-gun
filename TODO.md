@@ -6,6 +6,7 @@
 
 **ASAP**
 
+- Uh, login on Thinkpad (i.e. fresh one) doesn't work anymore
 - Per-client report for time sheet generation to easily send monthly activity logs.
   - These *should* be per-project instead of per-client, but if you don't yet have multiple rates per project, this doesn't work :/
 - Better reports:
