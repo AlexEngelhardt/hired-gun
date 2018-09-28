@@ -138,6 +138,7 @@ class Session(models.Model):
 
     description = models.TextField(blank=True, null=True)
     # If I'll use a 'duration' field, it should be blank=True but null=False, so that it has to be auto-generated
+    private_note = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ['-date']
