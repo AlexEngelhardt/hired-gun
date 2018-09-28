@@ -34,6 +34,9 @@
       <th scope="col">Session Date</th>
       <th scope="col">Client</th>
       <th scope="col">Units</th>
+      <th scope="col">From</th>
+      <th scope="col">To</th>
+      <th scope="col">Break</th>
       <th scope="col">Earned</th>
     </tr>
   </thead>
@@ -51,6 +54,21 @@
     <td>
       {% for session in todays_sessions %}
         {{ session.units_worked | floatformat:"-2" }} {{ session.project.rate_unit }}{% if session.units_worked != 1 %}s{% endif %} <br />
+      {% endfor %}
+    </td>
+    <td>
+      {% for session in todays_sessions %}
+        {{ session.start_time }} <br />
+      {% endfor %}
+    </td>
+    <td>
+      {% for session in todays_sessions %}
+        {{ session.end_time }} <br />
+      {% endfor %}
+    </td>
+    <td>
+      {% for session in todays_sessions %}
+        {% if session.break_duration %}{{ session.break_duration }}{% endif %} <br />
       {% endfor %}
     </td>
     <td align="right">

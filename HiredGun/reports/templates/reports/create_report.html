@@ -50,7 +50,7 @@
 <h3>Get a custom range report</h3>
 
 <p>
-  <form method="GET" action="earnings_report">
+  <form method="GET" action="/reports/earnings_report">
     <p>
     <label for="from">From: </label>
     <input type="date" name="from" value="{{ first_of_prev_month }}" />
@@ -58,6 +58,10 @@
     <label for="to">To: </label>
     <input type="date" name="to" value="{{ last_of_prev_month }}" />
     </p>
+
+    {% if client %}
+      <input type="hidden" name="client" value="{{ client.id }}" />
+    {% endif %}
     
     <input type="submit" value="Get Report" />
     
