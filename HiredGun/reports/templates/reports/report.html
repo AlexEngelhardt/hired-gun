@@ -58,12 +58,12 @@
     </td>
     <td>
       {% for session in todays_sessions %}
-        {{ session.start_time }} <br />
+        {% if session.start_time %}{{ session.start_time }}{% endif %} <br />
       {% endfor %}
     </td>
     <td>
       {% for session in todays_sessions %}
-        {{ session.end_time }} <br />
+        {% if session.end_time %}{{ session.end_time }}{% endif %} <br />
       {% endfor %}
     </td>
     <td>
