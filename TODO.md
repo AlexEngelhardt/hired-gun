@@ -6,7 +6,6 @@
 
 **ASAP**
 
-- **Uh, login on Thinkpad (i.e. fresh one) doesn't work anymore**
 - Per-client report for time sheet generation to easily send monthly activity logs.
   - These *should* be per-project instead of per-client, but if you don't yet have multiple rates per project, this doesn't work :/
 - Better reports:
@@ -62,6 +61,7 @@
 
 **General**
 
+- flake8 everything on a hangover day
 - Unify language or add i18n
   - Why do I have a comma as decimal sign, not a period?
 - All "delete" buttons should have a confirmation pop-up, or redirect to a dedicated confirmation template.

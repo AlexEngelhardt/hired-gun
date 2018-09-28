@@ -32,18 +32,10 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
-    
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+
 
 @receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    """
-    Basically we are hooking the create_user_profile and save_user_profile
-    methods to the User model, whenever a save event occurs. This kind of signal
-    is called post_save.
-    """
-    
-    instance.profile.save()
+def ensure_profile_exists(sender, **kwargs):
+    if kwargs.get('created', False):
+        Profile.objects.get_or_create(user=kwargs.get('instance'))
+
