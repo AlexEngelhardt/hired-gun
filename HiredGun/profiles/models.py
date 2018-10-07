@@ -33,7 +33,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
 
-
+# https://coderwall.com/p/ktdb3g/django-signals-an-extremely-simplified-explanation-for-beginners
 @receiver(post_save, sender=User)
 def ensure_profile_exists(sender, **kwargs):
     if kwargs.get('created', False):
