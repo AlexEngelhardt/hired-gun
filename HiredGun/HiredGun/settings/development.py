@@ -1,3 +1,4 @@
+import os
 from HiredGun.settings.common import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
