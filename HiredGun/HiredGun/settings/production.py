@@ -7,7 +7,9 @@ from HiredGun.settings.common import *
 
 DEBUG = False
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# Generate a secret.txt by:
+# head -c 256 /dev/urandom | md5sum | cut -f 1 -d\ > secret.txt
+SECRET_KEY = open(os.path.join(BASE_DIR, 'secret.txt')).read().strip()
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
