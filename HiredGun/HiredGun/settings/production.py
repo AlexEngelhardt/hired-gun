@@ -11,15 +11,6 @@ DEBUG = False
 # head -c 50 /dev/urandom | base64 > secret.txt
 SECRET_KEY = open(os.path.join(BASE_DIR, 'secret.txt')).read().strip()
 
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, '../db.sqlite3'),
-    }
-}
 
 # These were suggested by 'python3 manage.py check --deploy'
 SECURE_BROWSER_XSS_FILTER = True

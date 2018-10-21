@@ -119,6 +119,33 @@ LOGIN_REDIRECT_URL = '/'
 # LOGOUT_REDIRECT_URL = '/'
 
 
+# Database
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+
+dbs = {
+    'localfile': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, '../db.sqlite3'),
+    },
+    'dropbox': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/home/alexx/Dropbox/HiredGun.sqlite3',
+    },
+    'production': {
+        # Store data in environment variables, not in public :)
+        'ENGINE': os.getenv('HGUN_ENGINE'),
+        'NAME': os.getenv('HGUN_DB'),
+        'USER': os.getenv('HGUN_USER'),
+        'PASSWORD': os.getenv('HGUN_PASS'),
+        'HOST': os.getenv('HGUN_HOST'),
+        'PORT': os.getenv('HGUN_PORT'),
+    }
+}
+
+DATABASES = {
+    'default': dbs['dropbox']
+}
+
 
 # Optional local settings (e.g. for no password validation)
 # http://techstream.org/Bits/Local-Settings-in-django
