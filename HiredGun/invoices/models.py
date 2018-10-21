@@ -83,7 +83,9 @@ class Invoice(models.Model):
             due_date = datetime.date.today() + datetime.timedelta(days=30)
         elif payment_terms == 'Net 15':
             due_date = datetime.date.today() + datetime.timedelta(days=15)
-            
+        else:
+            # default suggested due date: 30 days from now
+            due_date = datetime.date.today() + datetime.timedelta(days=30)
         return due_date
 
     def is_overdue(self):
