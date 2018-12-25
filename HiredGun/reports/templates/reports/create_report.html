@@ -40,6 +40,15 @@
 	
         <input type="hidden" name="client" value="{{ client.id }}" />
     {% endif %}
+
+    </p>
+    <input type="radio" id="worked" name="show_which" value="worked" checked>
+    <label for="worked">Worked</label>
+    <input type="radio" id="invoiced" name="show_which" value="invoiced">
+    <label for="invoiced">Invoiced</label>
+    <input type="radio" id="paid" name="show_which" value="paid">
+    <label for="paid">Paid</label>
+    </p>
     
     <input type="submit" value="Get Report" />
 </form>
@@ -57,6 +66,15 @@
     
     <label for="to">To: </label>
     <input type="date" name="to" value="{{ last_of_prev_month }}" />
+    </p>
+
+    <p>
+    <input type="radio" id="worked" name="show_which" value="worked" checked>
+    <label for="worked">Worked</label>
+    <input type="radio" id="invoiced" name="show_which" value="invoiced">
+    <label for="invoiced">Invoiced</label>
+    <input type="radio" id="paid" name="show_which" value="paid">
+    <label for="paid">Paid</label>
     </p>
 
     {% if client %}

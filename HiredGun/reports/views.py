@@ -20,17 +20,36 @@ def last_day_of_month(any_day):
     return next_month - datetime.timedelta(days=next_month.day)
 
 
-def prepare_report(user, from_date, to_date, client_ids=[], project_ids=[]):
+def prepare_report(user, from_date, to_date,
+                   show_which="worked",  # "worked", "invoiced", or "paid"
+                   client_ids=[], project_ids=[]):
     """
     Filters all relevant sessions to create a report.
     Filters a time span with the from and to arguments.
     Optionally filters by client or project
     """
-    sessions = Session.objects.filter(
-        project__client__user=user,
-        date__gte=from_date,
-        date__lte=to_date
-    )
+
+    if show_which == "worked":
+        sessions = Session.objects.filter(
+            project__client__user=user,
+            date__gte=from_date,
+            date__lte=to_date
+        )
+    elif show_which == "invoiced":
+        sessions = Session.objects.filter(
+            project__client__user=user,
+            invoice__invoice_date__gte=from_date,
+            invoice__invoice_date__lte=to_date
+        )
+    elif show_which == "paid":
+        sessions = Session.objects.filter(
+            project__client__user=user,
+            invoice__paid_date__gte=from_date,
+            invoice__paid_date__lte=to_date
+        )
+    else:
+        raise ValueError("Invalid value for the 'show_which' argument "
+                         "supplied")
 
     if client_ids != []:
         sessions = sessions.filter(
@@ -114,8 +133,12 @@ def earnings_report(request):
     # /* get() would have returned None or 3, i.e. an int, if submitted */
     client_ids = request.GET.getlist('client')
     project_ids = request.GET.getlist('project')
+    show_which = request.GET.get('show_which')
 
-    context = prepare_report(request.user, from_date, to_date, client_ids, project_ids)
+    context = prepare_report(request.user,
+                             from_date, to_date,
+                             show_which=show_which,
+                             client_ids=client_ids, project_ids=project_ids)
 
     return render(request, 'reports/report.html', context)
 
