@@ -6,12 +6,12 @@
 
 **ASAP**
 
+- Plots should be per-year, but with the year selectable.
 - Die Pausezeiten werden nach einer Korrektur noch nicht berücksichtigt. Und der Vorschlagswert für den Tag einer Session sollte heute sein.
 - (How to / Shall I) allow passive income streams? E.g. a published book that throws off yearly recurring income? Or does that not fit in here? It would consolidate *all* income, though. 
 - Per-client report for time sheet generation to easily send monthly activity logs.
   - These *should* be per-project instead of per-client, but if you don't yet have multiple rates per project, this doesn't work :/
 - Better reports:
-  - Separate Cashflow report, counting "invoice paid" amounts.
   - Custom range report: If more months, align them next to each other with each month's sum at bottom (like Arc work log)
 - Currently, my model doesn't allow to set multiple rates for one project (e.g. on-site and remote). I'd have to add a separate project for remote work.
   - Start a new git branch for this though

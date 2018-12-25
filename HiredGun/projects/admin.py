@@ -3,17 +3,20 @@ from django.contrib import admin
 from .models import Project, Client, Session
 
 
-#### Clients
+# Clients
 
-class ProjectInline(admin.TabularInline):  # or admin.StackedInline if you prefer the ugly version :)
+
+# or admin.StackedInline if you prefer the ugly version :)
+class ProjectInline(admin.TabularInline):
     """
-    Conveniently enter foreign key relationships. 
+    Conveniently enter foreign key relationships.
     Allows to create a set of projects within the add-client
     admin form. See here:
     https://docs.djangoproject.com/en/2.0/intro/tutorial07/
     """
     model = Project
     extra = 1  # by default, add enough fields for 'extra' projects
+
 
 class ClientAdmin(admin.ModelAdmin):
     """
@@ -22,19 +25,23 @@ class ClientAdmin(admin.ModelAdmin):
     """
     fieldsets = [
         (None, {'fields': ['name', 'user']}),
-        ('Payment information', {'fields': ['payment_terms', 'invoice_email', 'billing_address']})
+        ('Payment information', {
+            'fields': ['payment_terms', 'invoice_email', 'billing_address']
+        })
     ]
     inlines = [ProjectInline]
+
 
 admin.site.register(Client, ClientAdmin)
 
 
-#### Projects
+# Projects
+
 
 class ProjectAdmin(admin.ModelAdmin):
     """
-    By default, the list view in an admin panel only shows the __str__ of a project.
-    Here, we specify fields to show in a more detailed, tabular view.
+    By default, the list view in an admin panel only shows the __str__ of a
+    project. Here, we specify fields to show in a more detailed, tabular view.
     Note: We can also use *methods* of a model, not only fields!
     """
     # Don't use all fields, you'll bloat the view:
@@ -42,9 +49,10 @@ class ProjectAdmin(admin.ModelAdmin):
     list_filter = ['start_date', 'end_date']
     search_fields = ['name']
 
+
 admin.site.register(Project, ProjectAdmin)
 
 
-#### Sessions
+# Sessions
 
 admin.site.register(Session)

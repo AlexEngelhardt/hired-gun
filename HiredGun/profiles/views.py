@@ -1,12 +1,8 @@
-from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from .models import Profile
 from .forms import UserForm, ProfileForm
 
 # Create your views here.

@@ -6,8 +6,10 @@ from django.urls import reverse
 
 from projects.models import Client, Project, Session
 
+
 # Create your tests here.
 # Run via `python3 manage.py test projects`
+
 
 def create_client(name="derp", payment_terms="Net 30"):
     return Client.objects.create(
@@ -16,14 +18,15 @@ def create_client(name="derp", payment_terms="Net 30"):
     )
 
 
-def create_project(client=None, name="testproj", rate=100, rate_unit="hr", active=True):
+def create_project(client=None, name="testproj", rate=100, rate_unit="hr",
+                   active=True):
 
     if client is None:
         client = create_client()
-        
+
     today = datetime.date.today()
     start_date = today - datetime.timedelta(days=30)
-    
+
     if active:
         end_date = today + datetime.timedelta(days=10)
     else:
@@ -42,12 +45,12 @@ def create_project(client=None, name="testproj", rate=100, rate_unit="hr", activ
 def create_session(project=None, days_ago=0):
     if project is None:
         project = create_project()
-        
+
     session_date = datetime.date.today() - datetime.timedelta(days=days_ago)
     return Session.objects.create(
-        project = project,
-        date = session_date,
-        units_worked = 2
+        project=project,
+        date=session_date,
+        units_worked=2
     )
 
 
@@ -74,11 +77,12 @@ class ClientIndexViewTests(TestCase):
         """
         If no clients exist, show an appropriate message
         """
-        
+
         response = self.client.get(reverse('projects:clients'))
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No clients are available")
+
 
 class SessionModelTests(TestCase):
 
@@ -88,6 +92,7 @@ class SessionModelTests(TestCase):
         """
         sesh = create_session()
         self.assertEqual(sesh.date, datetime.date.today())
+
 
 class SessionIndexViewTests(TestCase):
 
