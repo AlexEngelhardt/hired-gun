@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>
+  Side project: {{ side_project.name }}
+  <a class="btn btn-default" href="{% url 'side_income:edit-side-project' pk=side_project.pk %}">
+    <span class="glyphicon glyphicon-pencil"></span>
+  </a>
+  <a class="btn btn-default" href="{% url 'side_income:delete-side-project' pk=side_project.pk %}">
+    <span class="glyphicon glyphicon-trash"></span>
+  </a>
+</h1>
+
+<p>{{ side_project.description | linebreaks }}</p>
+
+{% endblock %}

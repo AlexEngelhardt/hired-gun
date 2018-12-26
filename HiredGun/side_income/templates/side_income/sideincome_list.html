@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Your side incomes</h1>
+
+<p><a class="btn btn-default" href="{% url 'side_income:add-side-income' %}"><span class="glyphicon glyphicon-plus"></span> Add side income</a></p>
+
+{% if side_incomes %}
+<table class="table">
+
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Side project</th>
+      <th scope="col">Description</th>
+      <th scope="col">Net amount</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  
+  {% for side_income in side_incomes %}
+  <tr>
+    <td>
+      <a href="{% url 'side_income:side-income-detail' side_income.id %}">{{ side_income.date }}</a>
+    </td>
+    <td>
+      <a href="{% url 'side_income:side-project-detail' side_income.side_project.id %}">{{ side_income.side_project.name }}</a>
+    </td>
+    <td>
+      {{ side_income.description }}
+    </td>
+    <td>
+      {{ side_income.net_amount }}
+    </td>
+    <td>
+      <a href="{% url 'side_income:edit-side-income' side_income.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+      <a href="{% url 'side_income:delete-side-income' side_income.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No side incomes are available.</p>
+{% endif %}
+
+{% endblock %}

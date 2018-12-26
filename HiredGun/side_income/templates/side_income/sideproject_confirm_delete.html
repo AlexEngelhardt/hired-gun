@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete side project "{{ object.name }}"?</p>
+    <input type="submit" value="Confirm">
+    <a href="{% url 'side_income:side-projects' %}">Cancel</a>
+</form>
+
+{% endblock %}

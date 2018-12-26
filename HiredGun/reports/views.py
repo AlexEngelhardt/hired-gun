@@ -2,10 +2,11 @@ import datetime
 import pandas as pd
 
 from django.shortcuts import render, get_object_or_404
-
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 
 from projects.models import Client, Project, Session
+from side_income.models import SideProject, SideIncome
 
 # I must store this function externally to avoid circular dependencies
 # (ImportError: cannot import name 'get_initial_values').
@@ -13,7 +14,9 @@ from projects.models import Client, Project, Session
 #  from views.py
 from .helpers import get_initial_values, get_total_earned
 
+
 # Helper functions
+
 
 def last_day_of_month(any_day):
     # dirty, but works:
@@ -141,6 +144,18 @@ def earnings_report(request):
                              from_date, to_date,
                              show_which=show_which,
                              client_ids=client_ids, project_ids=project_ids)
+
+    if request.GET.get('include_side_projects'):
+        context['include_side_projects'] = True
+        queryset = SideIncome.objects.filter(
+            side_project__user=request.user,
+            date__gte=from_date,
+            date__lte=to_date
+        )
+        side_income_sum = queryset.aggregate(total=Sum('net_amount'))['total']
+        if not side_income_sum:
+            side_income_sum = 0
+        context['side_income_sum'] = side_income_sum
 
     return render(request, 'reports/report.html', context)
 

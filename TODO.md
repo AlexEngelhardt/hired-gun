@@ -6,9 +6,10 @@
 
 **ASAP**
 
+- show_which = invoiced or paid: The table in the reports doesn't make sense anymore if show_which != 'worked'
+- Side_income needs export-csv views like Sessions has
 - Plots should be per-year, but with the year selectable.
 - Die Pausezeiten werden nach einer Korrektur noch nicht berücksichtigt. Und der Vorschlagswert für den Tag einer Session sollte heute sein.
-- (How to / Shall I) allow passive income streams? E.g. a published book that throws off yearly recurring income? Or does that not fit in here? It would consolidate *all* income, though. 
 - Per-client report for time sheet generation to easily send monthly activity logs.
   - These *should* be per-project instead of per-client, but if you don't yet have multiple rates per project, this doesn't work :/
 - Better reports:

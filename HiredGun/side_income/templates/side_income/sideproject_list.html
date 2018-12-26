@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Your side projects</h1>
+
+<p><a class="btn btn-default" href="{% url 'side_income:add-side-project' %}"><span class="glyphicon glyphicon-plus"></span> Add side project</a></p>
+
+{% if side_projects %}
+<table class="table">
+
+  <thead>
+    <tr>
+      <th scope="col">Side Project</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  
+  {% for side_project in side_projects %}
+  <tr>
+    <td>
+      <a href="{% url 'side_income:side-project-detail' side_project.id %}">{{ side_project.name }}
+    </td>
+    <td>
+      <a href="{% url 'side_income:edit-side-project' side_project.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+      <a href="{% url 'side_income:delete-side-project' side_project.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No side projects are available.</p>
+{% endif %}
+
+{% endblock %}

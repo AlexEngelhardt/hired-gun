@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>
+  Side income from {{ side_income.date }}
+  <a class="btn btn-default" href="{% url 'side_income:edit-side-income' pk=side_income.pk %}">
+    <span class="glyphicon glyphicon-pencil"></span>
+  </a>
+  <a class="btn btn-default" href="{% url 'side_income:delete-side-income' pk=side_income.pk %}">
+    <span class="glyphicon glyphicon-trash"></span>
+  </a>
+</h1>
+
+<dl>
+  <dt>Side project</dt>
+  <dd><a href="{% url 'side_income:side-project-detail' side_income.side_project.id %}">{{ side_income.side_project.name }}</a></dd>
+
+  <dt>Date</dt>
+  <dd>{{ side_income.date }}</dd>
+  
+  <dt>Net earned</dt>
+  <dd>{{ side_income.net_amount }}</dd>
+  
+  <dt>Description</dt>
+  <dd>{{ side_income.description | linebreaks }}</dd>
+</dl>
+
+{% endblock %}

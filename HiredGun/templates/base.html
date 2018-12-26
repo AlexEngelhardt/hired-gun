@@ -14,8 +14,6 @@
     <link rel="stylesheet" href="{% static '/projects/css/googlefont.css' %}">
     <link rel="stylesheet" href="{% static '/projects/css/style.css' %}" type="text/css">
     
-    <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.css" type="text/css" />
-    <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js"></script>
   </head>
 
   <body>
@@ -53,6 +51,7 @@
           <li><a href="{% url 'projects:clients' %}">Clients</a></li>
           <li><a href="{% url 'projects:projects' %}">Projects</a></li>
           <li><a href="{% url 'projects:sessions' %}">Sessions</a></li>
+	  <li><a href="{% url 'side_income:index' %}">Side Income</a></li>
           <li><a href="{% url 'reports:index' %}">Reports</a></li>
           <li><a href="{% url 'invoices:index' %}">Invoices</a></li>
         </ul>
