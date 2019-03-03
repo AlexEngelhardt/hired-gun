@@ -6,6 +6,8 @@
 
 **ASAP**
 
+- Invoice: Must be able to set VAT rate (e.g. 0% for reverse charge or 19%)
+- "fixed" projects (i.e. without hourly rate): Invoices and sessions don't make sense yet.
 - show_which = invoiced or paid: The table in the reports doesn't make sense anymore if show_which != 'worked'
 - Side_income needs export-csv views like Sessions has
 - Plots should be per-year, but with the year selectable.
@@ -133,6 +135,8 @@
 
 ### Long-term / Features
 
+- Store the last entered session as a foreign key in the User model. Then:
+  When entering a session, suggest the first weekday after that session.
 - A CV functionality. Track project descriptions, tools used, etc., and
   have it exportable as HTML, Word and PDF
 - Omg the second image looks bomb: http://merehead.com/blog/build-online-crm-system/
