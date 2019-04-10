@@ -61,6 +61,8 @@ class Project(models.Model):
                                      ('fix', 'Fixed'),
                                  ),
                                  default='hr')
+    estimated_total_hours = models.DecimalField(
+        max_digits=7, decimal_places=2, null=True, blank=True)
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
