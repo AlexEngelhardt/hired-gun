@@ -25,7 +25,12 @@
 {% else %}
   <p>Project is <strong>not active</strong></p>
   <p>It ran from {{ project.start_date }} until {{ project.end_date }}</p>
-{% endif %}
+  {% endif %}
+
+<h4>Stats</h4>
+
+<p>{{ project.get_units_worked }} {% if project.rate_unit == 'day' %}day{% else %}hour{% endif %}s worked so far</p>
+
 
 <h4>Paying</h4>
 

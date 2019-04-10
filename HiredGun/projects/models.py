@@ -93,6 +93,8 @@ class Project(models.Model):
         return line
 
     def get_units_worked(self):
+        """Units (hours or days) worked so far in this project
+        """
         units = 0
         for sesh in self.session_set.all():
             units += sesh.get_units_worked()
@@ -185,7 +187,30 @@ class Session(models.Model):
 
     def get_money_earned(self):
         # TODO this is redunantly computed in views.py too :(
-        return self.units_worked * self.project.rate
+        # ^-- update: I don't think so, I couldn't find it (anymore)
+        if self.project.rate_unit in ['hr', 'day']:
+            return self.units_worked * self.project.rate
+        elif self.project.rate_unit == 'fix':
+            assert self.project.estimated_total_hours
+
+            if self.project.get_units_worked() > \
+               self.project.estimated_total_hours or \
+               self.project.is_active() is False:
+                # If you've so far worked more hours than this project's
+                #   estimated_total_hours OR the project is already done,
+                #   compute the "true" hourly rate by fix_money / sum_hours
+                hourly_rate = self.project.rate / \
+                              self.project.get_units_worked()
+            else:
+                # Else: The project is still running. Then, estimate todays
+                #    earned money via fix money / estimated_total_hours
+                hourly_rate = self.project.rate / \
+                              self.project.estimated_total_hours
+
+            return self.units_worked * hourly_rate
+        else:
+            raise ValueError('Unknown rate_unit (' +
+                             self.project.rate_unit + ') for this project!')
 
     def __str__(self):
         return 'Session in ' + str(self.project) + \
@@ -198,7 +223,7 @@ class Session(models.Model):
         break_duration, but not units_worked, we'll autocompute it
         """
         if self.units_worked is None:
-            if self.project.rate_unit == 'hr':
+            if self.project.rate_unit in ['hr', 'fix']:
                 today = datetime.date.today()
 
                 hours_worked = (
@@ -211,9 +236,6 @@ class Session(models.Model):
                 self.units_worked = hours_worked.seconds / 60 / 60
 
             elif self.project.rate_unit == 'day':
-                self.units_worked = 1
-
-            elif self.project.rate_unit == 'fix':
                 self.units_worked = 1
 
         super().save(*args, **kwargs)

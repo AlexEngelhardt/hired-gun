@@ -36,7 +36,11 @@
     <td>
       {% if session.invoice %}<a href="{% url 'invoices:invoice-detail' session.invoice.pk %}">{{ session.invoice }}</a>{% endif %}
     <td>
-      {{ session.units_worked | floatformat:"-2" }} {{ session.project.rate_unit }}{% if session.units_worked != 1 %}s{% endif %}
+      <!-- 
+	   This was in place while rate_unit = 'fix' was still shown as "1 fix" and I couldn't split it up into hours.
+	   {{ session.units_worked | floatformat:"-2" }} {{ session.project.rate_unit }}{% if session.units_worked != 1 %}s{% endif %}
+      -->
+      {{ session.units_worked | floatformat:"-2" }} {% if session.project.rate_unit == 'hr' %}hr{% elif session.project.rate_unit == 'fix' %}hr{% elif session.project.rate_unit == 'day' %}day{% endif %}{% if session.units_worked != 1 %}s{% endif %}
     </td>
     <td>
       {{ session.get_money_earned | floatformat:"2" }}
