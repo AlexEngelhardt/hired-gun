@@ -11,6 +11,8 @@
 - show_which = invoiced or paid: The table in the reports doesn't make sense anymore if show_which != 'worked'
 - Side_income needs export-csv views like Sessions has
 - Plots should be per-year, but with the year selectable.
+  - And behind the alpha-blue plots in grey: last year's earnings?
+  - similarly with the linechart. Last year's line in grey?
 - Die Pausezeiten werden nach einer Korrektur noch nicht berücksichtigt. Und der Vorschlagswert für den Tag einer Session sollte heute sein.
 - Per-client report for time sheet generation to easily send monthly activity logs.
   - These *should* be per-project instead of per-client, but if you don't yet have multiple rates per project, this doesn't work :/
@@ -100,6 +102,13 @@
 
 - Use [django-tables2](https://django-tables2.readthedocs.io/en/latest/) instead of manually written HTML tables. They are also sortable by column
 - Multiple currencies besides €
+
+**Really cool ideas**
+
+- Create an API that could allow logged-in users to download JSON of all
+  their clients, projects, sessions, invoices, etc.
+  - This would also allow you to build new products in a modular way
+    instead of crumming everything report-y into HiredGun itself
 
 **AJAX/jQuery/etc**
 
