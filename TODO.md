@@ -45,6 +45,7 @@
 
 **Reports**
 
+- Pie chart of per-year earnings per client
 - billable hours (convert days to 8 hours) worked per month/year
 - Output reports as PDF
   - Use 'django-wkhtmltopdf' instead of reportlab, you can create and transform an invoice HTML easily instead of having to draw the whole PDF by hand
