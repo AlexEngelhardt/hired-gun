@@ -6,6 +6,7 @@
 
 **ASAP**
 
+- Invoices for fixed-rate projects don't work yet. The get_total_amount helper multiplies the fixed-rate with the amount of hours worked!
 - Invoice: Must be able to set VAT rate (e.g. 0% for reverse charge or 19%)
 - "fixed" projects (i.e. without hourly rate): Invoices and sessions don't make sense yet.
 - show_which = invoiced or paid: The table in the reports doesn't make sense anymore if show_which != 'worked'

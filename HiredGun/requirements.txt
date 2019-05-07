@@ -1,6 +1,6 @@
 bokeh==0.13.0
 Django ~> 2.1.6
-Jinja2==2.10
+Jinja2 ~> 2.10
 MarkupSafe==1.0
 numpy==1.15.2
 packaging==18.0

@@ -12,7 +12,7 @@ from side_income.models import SideProject, SideIncome
 # (ImportError: cannot import name 'get_initial_values').
 # Otherwise, views.py would import .forms, and forms.py would import a fct
 #  from views.py
-from .helpers import get_initial_values, get_total_earned
+from .helpers import get_initial_values
 
 
 # Helper functions
@@ -72,13 +72,15 @@ def prepare_report(user, from_date, to_date,
     sessions_per_date = {today: sessions.filter(date=today)
                          for today in date_range}
 
+    total_earned = sum([sesh.get_money_earned() for sesh in sessions])
+
     context = {
         'sessions': sessions,  # obsolete if sessions_per_date will work
         'from': from_date,
         'to': to_date,
         'date_range': date_range,
         'sessions_per_date': sessions_per_date,
-        'total_earned': get_total_earned(sessions),
+        'total_earned': total_earned,
     }
 
     if client_ids != []:
@@ -197,7 +199,10 @@ def create_ytdplot(df):
 
 @login_required
 def plots(request):
-    sessions = Session.objects.filter(project__client__user=request.user)
+    sessions = Session.objects.filter(
+        project__client__user=request.user,
+        date__year=datetime.datetime.today().year
+    )
     cashies = list(
         map(lambda x: (x.date.month, x.date.year, x.get_money_earned()),
             sessions)

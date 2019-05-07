@@ -55,7 +55,7 @@
     </td>
     <td>
       {% for session in todays_sessions %}
-        {{ session.units_worked | floatformat:"-2" }} {{ session.project.rate_unit }}{% if session.units_worked != 1 %}s{% endif %} <br />
+        {{ session.units_worked | floatformat:"-2" }} {% if session.project.rate_unit == 'day' %}day{% else %}hr{% endif %}{% if session.units_worked != 1 %}s{% endif %} <br />
       {% endfor %}
     </td>
     <td>

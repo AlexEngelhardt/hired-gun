@@ -6,6 +6,10 @@ from django.db.models import F, Sum
 
 
 def get_total_earned(sessions):
+    """Sessions must be with a per_hour or per_day rate, not
+    a fixed rate!
+    """
+
     total_earned = sessions.aggregate(
         cash=Sum(F('units_worked') * F('project__rate'))
     )['cash']
